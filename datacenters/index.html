@@ -485,7 +485,8 @@
       function syncStateFilter() {
         document.getElementById("fState").value = selState || "";
         renderTable();
-        if (selState) document.getElementById("fState").scrollIntoView({ block: "center", behavior: noMotion ? "auto" : "smooth" });
+        // Stay in place on the map when drilling into a state/county (Jason 3570).
+        // No scrollIntoView here: the detail table updates in place; the user keeps the map viewport.
       }
 
       function clearStateFilter() {
