@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Science Accelerable Compute Catalogue — Fable Stats</title>
+<style>
+:root { --bg:#0d1117; --panel:#161b22; --line:#21262d; --txt:#e6edf3; --sub:#8b949e; --acc:#4da3ff; }
+* { box-sizing:border-box; margin:0; padding:0; }
+body { background:var(--bg); color:var(--txt); font-family:-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif; line-height:1.55; padding:32px 18px 60px; }
+.wrap { max-width:1080px; margin:0 auto; }
+h1 { font-size:30px; letter-spacing:.2px; }
+.sub { color:var(--sub); margin:8px 0 28px; font-size:14px; }
+.hero { display:flex; gap:16px; flex-wrap:wrap; margin:22px 0 30px; }
+.kpi { flex:1 1 160px; background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:16px 18px; }
+.kpi .n { font-size:30px; font-weight:700; color:var(--acc); }
+.kpi .l { color:var(--sub); font-size:13px; margin-top:4px; }
+.panel { background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:20px 22px; margin:18px 0; }
+.panel h2 { font-size:18px; margin-bottom:14px; }
+.note { color:var(--sub); font-size:12.5px; margin-top:10px; }
+.bar-row { display:flex; align-items:center; gap:10px; margin:7px 0; font-size:13.5px; }
+.bar-label { width:220px; text-align:right; flex:none; color:var(--txt); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.bar-track { flex:1; background:#21262d; border-radius:5px; height:18px; overflow:hidden; }
+.bar-fill { height:100%; border-radius:5px; }
+.bar-val { width:64px; flex:none; color:var(--sub); font-size:12.5px; }
+.legend-row { display:flex; align-items:center; gap:10px; margin:8px 0; font-size:14px; }
+.swatch { width:12px; height:12px; border-radius:3px; flex:none; }
+.legend-n { margin-left:auto; color:var(--sub); font-size:12.5px; }
+.foot { color:var(--sub); font-size:12px; margin-top:34px; border-top:1px solid var(--line); padding-top:16px; }
+@media (max-width:640px) { .bar-label { width:130px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Science-Accelerable Compute Catalogue</h1>
+<div class="sub">Fable-style overview of GPU-accelerable scientific software candidates · Sonnet-validated pool · generated 2026-08-13</div>
+
+<div class="hero">
+<div class="kpi"><div class="n">7,410</div><div class="l">Validated candidates (PASS)</div></div>
+<div class="kpi"><div class="n">7,478</div><div class="l">Total reviewed (incl. 24 REJECT, 44 UNCERTAIN)</div></div>
+<div class="kpi"><div class="n">60</div><div class="l">Distinct scientific domains</div></div>
+<div class="kpi"><div class="n">7,410</div><div class="l">With GPU-rewrite surface proposal</div></div>
+</div>
+
+<div class="panel"><h2>Scientific domains (top)</h2><div class="bar-row"><div class="bar-label">statistics</div><div class="bar-track"><div class="bar-fill" style="width:100.0%;background:#4da3ff"></div></div><div class="bar-val">414</div></div>
+<div class="bar-row"><div class="bar-label">machine learning</div><div class="bar-track"><div class="bar-fill" style="width:63.5%;background:#4da3ff"></div></div><div class="bar-val">263</div></div>
+<div class="bar-row"><div class="bar-label">optimization</div><div class="bar-track"><div class="bar-fill" style="width:39.9%;background:#4da3ff"></div></div><div class="bar-val">165</div></div>
+<div class="bar-row"><div class="bar-label">bioinformatics</div><div class="bar-track"><div class="bar-fill" style="width:39.4%;background:#4da3ff"></div></div><div class="bar-val">163</div></div>
+<div class="bar-row"><div class="bar-label">numerical analysis</div><div class="bar-track"><div class="bar-fill" style="width:36.5%;background:#4da3ff"></div></div><div class="bar-val">151</div></div>
+<div class="bar-row"><div class="bar-label">numerical linear algebra</div><div class="bar-track"><div class="bar-fill" style="width:30.7%;background:#4da3ff"></div></div><div class="bar-val">127</div></div>
+<div class="bar-row"><div class="bar-label">mathematics</div><div class="bar-track"><div class="bar-fill" style="width:30.4%;background:#4da3ff"></div></div><div class="bar-val">126</div></div>
+<div class="bar-row"><div class="bar-label">signal processing</div><div class="bar-track"><div class="bar-fill" style="width:30.0%;background:#4da3ff"></div></div><div class="bar-val">124</div></div>
+<div class="bar-row"><div class="bar-label">visualization</div><div class="bar-track"><div class="bar-fill" style="width:26.3%;background:#4da3ff"></div></div><div class="bar-val">109</div></div>
+<div class="bar-row"><div class="bar-label">materials science</div><div class="bar-track"><div class="bar-fill" style="width:24.6%;background:#4da3ff"></div></div><div class="bar-val">102</div></div>
+<div class="bar-row"><div class="bar-label">scientific computing</div><div class="bar-track"><div class="bar-fill" style="width:23.4%;background:#4da3ff"></div></div><div class="bar-val">97</div></div>
+<div class="bar-row"><div class="bar-label">operations research</div><div class="bar-track"><div class="bar-fill" style="width:21.0%;background:#4da3ff"></div></div><div class="bar-val">87</div></div>
+<div class="bar-row"><div class="bar-label">data processing</div><div class="bar-track"><div class="bar-fill" style="width:18.8%;background:#4da3ff"></div></div><div class="bar-val">78</div></div>
+<div class="bar-row"><div class="bar-label">robotics</div><div class="bar-track"><div class="bar-fill" style="width:18.1%;background:#4da3ff"></div></div><div class="bar-val">75</div></div><div class="note">Multiple domain tags per candidate; top-14 of 60 distinct tags.</div></div>
+
+<div class="panel"><h2>Compute families / workloads (top)</h2><div class="bar-row"><div class="bar-label">other</div><div class="bar-track"><div class="bar-fill" style="width:100.0%;background:#7ed321"></div></div><div class="bar-val">1999</div></div>
+<div class="bar-row"><div class="bar-label">data processing</div><div class="bar-track"><div class="bar-fill" style="width:95.1%;background:#7ed321"></div></div><div class="bar-val">1901</div></div>
+<div class="bar-row"><div class="bar-label">statistical/ML</div><div class="bar-track"><div class="bar-fill" style="width:68.5%;background:#7ed321"></div></div><div class="bar-val">1370</div></div>
+<div class="bar-row"><div class="bar-label">optimization</div><div class="bar-track"><div class="bar-fill" style="width:56.8%;background:#7ed321"></div></div><div class="bar-val">1135</div></div>
+<div class="bar-row"><div class="bar-label">simulation</div><div class="bar-track"><div class="bar-fill" style="width:47.4%;background:#7ed321"></div></div><div class="bar-val">948</div></div>
+<div class="bar-row"><div class="bar-label">dense linear algebra</div><div class="bar-track"><div class="bar-fill" style="width:33.0%;background:#7ed321"></div></div><div class="bar-val">660</div></div>
+<div class="bar-row"><div class="bar-label">signal/image</div><div class="bar-track"><div class="bar-fill" style="width:24.8%;background:#7ed321"></div></div><div class="bar-val">496</div></div>
+<div class="bar-row"><div class="bar-label">Monte Carlo</div><div class="bar-track"><div class="bar-fill" style="width:20.3%;background:#7ed321"></div></div><div class="bar-val">405</div></div>
+<div class="bar-row"><div class="bar-label">visualization</div><div class="bar-track"><div class="bar-fill" style="width:19.3%;background:#7ed321"></div></div><div class="bar-val">386</div></div>
+<div class="bar-row"><div class="bar-label">stencil/PDE</div><div class="bar-track"><div class="bar-fill" style="width:13.4%;background:#7ed321"></div></div><div class="bar-val">267</div></div>
+<div class="bar-row"><div class="bar-label">sparse linear algebra</div><div class="bar-track"><div class="bar-fill" style="width:13.2%;background:#7ed321"></div></div><div class="bar-val">264</div></div>
+<div class="bar-row"><div class="bar-label">dense/sparse linear algebra</div><div class="bar-track"><div class="bar-fill" style="width:11.0%;background:#7ed321"></div></div><div class="bar-val">220</div></div><div class="note">Task-typed workload families; candidates may carry several.</div></div>
+
+<div class="panel"><h2>Primary code language (evidence-derived, top)</h2><div class="bar-row"><div class="bar-label">Julia</div><div class="bar-track"><div class="bar-fill" style="width:100.0%;background:#f5a623"></div></div><div class="bar-val">13854</div></div>
+<div class="bar-row"><div class="bar-label">Python</div><div class="bar-track"><div class="bar-fill" style="width:1.9%;background:#f5a623"></div></div><div class="bar-val">259</div></div>
+<div class="bar-row"><div class="bar-label">R</div><div class="bar-track"><div class="bar-fill" style="width:0.4%;background:#f5a623"></div></div><div class="bar-val">60</div></div>
+<div class="bar-row"><div class="bar-label">Ruby</div><div class="bar-track"><div class="bar-fill" style="width:0.3%;background:#f5a623"></div></div><div class="bar-val">39</div></div>
+<div class="bar-row"><div class="bar-label">MATLAB/Octave</div><div class="bar-track"><div class="bar-fill" style="width:0.3%;background:#f5a623"></div></div><div class="bar-val">37</div></div>
+<div class="bar-row"><div class="bar-label">JavaScript</div><div class="bar-track"><div class="bar-fill" style="width:0.2%;background:#f5a623"></div></div><div class="bar-val">31</div></div>
+<div class="bar-row"><div class="bar-label">C++</div><div class="bar-track"><div class="bar-fill" style="width:0.1%;background:#f5a623"></div></div><div class="bar-val">18</div></div>
+<div class="bar-row"><div class="bar-label">Fortran</div><div class="bar-track"><div class="bar-fill" style="width:0.1%;background:#f5a623"></div></div><div class="bar-val">17</div></div>
+<div class="bar-row"><div class="bar-label">C/C++ header</div><div class="bar-track"><div class="bar-fill" style="width:0.1%;background:#f5a623"></div></div><div class="bar-val">14</div></div>
+<div class="bar-row"><div class="bar-label">C</div><div class="bar-track"><div class="bar-fill" style="width:0.1%;background:#f5a623"></div></div><div class="bar-val">13</div></div>
+<div class="bar-row"><div class="bar-label">Jupyter Notebook</div><div class="bar-track"><div class="bar-fill" style="width:0.1%;background:#f5a623"></div></div><div class="bar-val">13</div></div>
+<div class="bar-row"><div class="bar-label">Go</div><div class="bar-track"><div class="bar-fill" style="width:0.1%;background:#f5a623"></div></div><div class="bar-val">10</div></div><div class="note">Language inferred from evidence URLs/file extensions; Julia-heavy pool. Markdown/TOML/JSON metadata excluded from headline.</div></div>
+
+<div class="panel"><h2>Code footprint proxy (source files cited in evidence)</h2><div class="bar-row"><div class="bar-label">no src evidence</div><div class="bar-track"><div class="bar-fill" style="width:100.0%;background:#c084fc"></div></div><div class="bar-val">423</div></div>
+<div class="bar-row"><div class="bar-label">1-9 src files</div><div class="bar-track"><div class="bar-fill" style="width:1651.8%;background:#c084fc"></div></div><div class="bar-val">6987</div></div>
+<div class="bar-row"><div class="bar-label">10-49</div><div class="bar-track"><div class="bar-fill" style="width:0.0%;background:#c084fc"></div></div><div class="bar-val">0</div></div>
+<div class="bar-row"><div class="bar-label">&gt;=50</div><div class="bar-track"><div class="bar-fill" style="width:0.0%;background:#c084fc"></div></div><div class="bar-val">0</div></div><div class="note">Proxy: distinct source-code file paths referenced in the review evidence per candidate; not a full LOC estimate.</div></div>
+
+<div class="panel"><h2>GPU implementation status (readiness)</h2><div class="legend-row"><span class="swatch" style="background:#4da3ff"></span>unknown<span class="legend-n">5025 (67.8%)</span></div>
+<div class="legend-row"><span class="swatch" style="background:#f5a623"></span>partial<span class="legend-n">455 (6.1%)</span></div>
+<div class="legend-row"><span class="swatch" style="background:#7ed321"></span>ready<span class="legend-n">291 (3.9%)</span></div>
+<div class="legend-row"><span class="swatch" style="background:#d0021b"></span>blocked<span class="legend-n">1639 (22.1%)</span></div><div class="note">ready = repo already has a GPU/CUDA implementation; blocked = explicit blockers reported; unknown = not assessed.</div></div>
+
+<div class="panel"><h2>Common bottlenecks (top)</h2><div class="bar-row"><div class="bar-label">none</div><div class="bar-track"><div class="bar-fill" style="width:100.0%;background:#ff6b6b"></div></div><div class="bar-val">79</div></div>
+<div class="bar-row"><div class="bar-label">network I/O</div><div class="bar-track"><div class="bar-fill" style="width:84.8%;background:#ff6b6b"></div></div><div class="bar-val">67</div></div>
+<div class="bar-row"><div class="bar-label">file I/O</div><div class="bar-track"><div class="bar-fill" style="width:72.2%;background:#ff6b6b"></div></div><div class="bar-val">57</div></div>
+<div class="bar-row"><div class="bar-label">I/O</div><div class="bar-track"><div class="bar-fill" style="width:39.2%;background:#ff6b6b"></div></div><div class="bar-val">31</div></div>
+<div class="bar-row"><div class="bar-label">memory bandwidth</div><div class="bar-track"><div class="bar-fill" style="width:35.4%;background:#ff6b6b"></div></div><div class="bar-val">28</div></div>
+<div class="bar-row"><div class="bar-label">None</div><div class="bar-track"><div class="bar-fill" style="width:27.8%;background:#ff6b6b"></div></div><div class="bar-val">22</div></div>
+<div class="bar-row"><div class="bar-label">disk I/O</div><div class="bar-track"><div class="bar-fill" style="width:26.6%;background:#ff6b6b"></div></div><div class="bar-val">21</div></div>
+<div class="bar-row"><div class="bar-label">none in-repo; artifact download/installation is I/O-bound, not compute</div><div class="bar-track"><div class="bar-fill" style="width:22.8%;background:#ff6b6b"></div></div><div class="bar-val">18</div></div>
+<div class="bar-row"><div class="bar-label">no in-repo compute</div><div class="bar-track"><div class="bar-fill" style="width:22.8%;background:#ff6b6b"></div></div><div class="bar-val">18</div></div>
+<div class="bar-row"><div class="bar-label">Binary artifact download/artifact resolution (I/O)</div><div class="bar-track"><div class="bar-fill" style="width:20.3%;background:#ff6b6b"></div></div><div class="bar-val">16</div></div><div class="note">Reported likely bottlenecks in the reviewed CPU workloads.</div></div>
+
+<div class="foot">Source: Science Compute Catalogue broad discovery + candidate review pool, Sonnet-validated. Figures are evidence-derived aggregates; methodology and raw ledgers are maintained in the project workspace. No internal paths are exposed.</div>
+</div>
+</body>
+</html>
