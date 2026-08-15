@@ -1,4 +1,317 @@
-<!DOCTYPE html><html lang="en" data-language="dual" data-theme="aurora-cosmic"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="ScienceAccelBench × Helio — a benchmark for AI CPU-to-GPU code translation across high-performance scientific computing."><meta name="theme-color" content="#05070d"><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2305070d'/%3E%3Ccircle cx='32' cy='32' r='20' fill='none' stroke='%2378f7d4' stroke-width='2'/%3E%3Cpath d='M7 32h50M32 7v50' stroke='%2378f7d4' opacity='.45'/%3E%3Ccircle cx='32' cy='32' r='7' fill='%2378f7d4'/%3E%3C/svg%3E"><title>ScienceAccelBench × Helio — From Science Code to Accelerated Discovery</title><link rel="stylesheet" href="./assets/index.DW7YyUwG.css"></head> <body> <a class="skip-link" href="#main">Skip to content / 跳至正文</a> <div class="cosmos" aria-hidden="true"> <div class="aurora aurora-a"></div> <div class="aurora aurora-b"></div> <div class="stars stars-a"></div> <div class="stars stars-b"></div> </div> <header class="topbar"> <a class="brand" href="#top" aria-label="ScienceAccelBench × Helio home"> <span class="brand-sigil"><i></i></span> <span><b>SCIENCE<span>ACCEL</span>BENCH</b><small>× HELIO</small></span> </a> <nav aria-label="Main navigation / 主导航"> <a href="#funnel"><span>01</span><b data-lang="en">CORPUS</b><i class="lang-divider">/</i><b data-lang="zh">语料</b></a> <a href="#atlas"><span>02</span><b data-lang="en">ATLAS</b><i class="lang-divider">/</i><b data-lang="zh">图谱</b></a> <a href="#translation"><span>03</span><b data-lang="en">TRANSLATE</b><i class="lang-divider">/</i><b data-lang="zh">迁移</b></a> <a href="./sankey.html"><span>04</span><b data-lang="en">SANKEY</b><i class="lang-divider">/</i><b data-lang="zh">桑基图</b></a> </nav> <div class="header-tools"> <div class="language-switch" role="group" aria-label="Language mode / 语言模式"> <button type="button" data-language-mode="en" aria-pressed="false">EN</button> <button type="button" data-language-mode="dual" class="is-active" aria-pressed="true">中·EN</button> <button type="button" data-language-mode="zh" aria-pressed="false">中文</button> </div> <div class="live-mark"><i></i><span>AURORA DARK</span><b>· 2026.08.15</b></div> </div> </header> <main id="main"> <section class="hero" id="top" aria-labelledby="hero-title"> <div class="hero-index" aria-hidden="true">SAB—H / 001</div> <div class="hero-copy"> <p class="eyebrow"><span data-lang="en">AI × SCIENTIFIC COMPUTING</span><span data-lang="zh">人工智能 × 科学计算</span></p> <h1 id="hero-title"> <span>ScienceAccelBench</span> <span class="title-orbit"><b>×</b> Helio</span> </h1> <p class="hero-subtitle" data-lang="en">
+<!DOCTYPE html><html lang="en" data-language="dual" data-theme="aurora-cosmic"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="ScienceAccelBench — a benchmark for AI CPU-to-GPU code translation across high-performance scientific computing."><meta name="theme-color" content="#05070d"><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2305070d'/%3E%3Ccircle cx='32' cy='32' r='20' fill='none' stroke='%2378f7d4' stroke-width='2'/%3E%3Cpath d='M7 32h50M32 7v50' stroke='%2378f7d4' opacity='.45'/%3E%3Ccircle cx='32' cy='32' r='7' fill='%2378f7d4'/%3E%3C/svg%3E"><title>ScienceAccelBench — From Science Code to Accelerated Discovery</title><link rel="stylesheet" href="./assets/index.DW7YyUwG.css"><style>
+.sankey-section{padding-top:1rem}
+.sankey-panel{position:relative;border:1px solid rgba(120,247,212,.16);border-radius:16px;
+ background:linear-gradient(180deg,rgba(10,16,26,.85),rgba(5,8,14,.92));padding:1.25rem 1.25rem 1rem;
+ box-shadow:0 24px 60px -30px rgba(0,0,0,.9)}
+.sankey-topline{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;
+ font:600 10.5px/1 Inter,system-ui,sans-serif;letter-spacing:.16em;color:#637995;
+ text-transform:uppercase;margin-bottom:.85rem}
+.sankey-topline i{display:inline-block;width:7px;height:7px;border-radius:50%;background:#78f7d4;margin-right:.5rem}
+#sankeyChart{width:100%;height:460px}
+@media(max-width:860px){#sankeyChart{height:360px}}
+@media(max-width:560px){#sankeyChart{height:300px}}
+.sankey-foot{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-top:.75rem;
+ padding-top:.75rem;border-top:1px solid rgba(120,247,212,.1);
+ font:500 11px/1.5 Inter,system-ui,sans-serif;color:#637995}
+.sankey-foot b{color:#9fb4cc;font-weight:600}
+</style><style id="light-theme">
+:root[data-theme="solar-light"]{
+ --bg:#f5f7fa; --panel:rgba(255,255,255,.82); --panel-solid:#ffffff;
+ --ink:#0d1420; --muted:#5a6a7d;
+ --line:rgba(13,20,32,.13); --line-strong:rgba(13,20,32,.26);
+ --mint:#0e9e7c; --blue:#2b7fd4; --violet:#6b62d6; --orange:#c9761a;
+ color-scheme:light;
+}
+:root[data-theme="solar-light"] body{background:var(--bg);color:var(--ink)}
+/* the cosmic backdrop is built for dark; soften it right down */
+:root[data-theme="solar-light"] .cosmos{opacity:.16;filter:saturate(.5)}
+:root[data-theme="solar-light"] .stars-a,
+:root[data-theme="solar-light"] .stars-b{opacity:.12}
+:root[data-theme="solar-light"] .aurora{opacity:.2;filter:blur(70px) saturate(.75)}
+/* surfaces */
+:root[data-theme="solar-light"] .topbar{background:rgba(255,255,255,.9);
+ border-bottom:1px solid var(--line);backdrop-filter:blur(12px)}
+:root[data-theme="solar-light"] .funnel-panel,
+:root[data-theme="solar-light"] .stat-card,
+:root[data-theme="solar-light"] .candidate-card,
+:root[data-theme="solar-light"] .sankey-panel,
+:root[data-theme="solar-light"] .translation-board,
+:root[data-theme="solar-light"] .evaluation-ribbon,
+:root[data-theme="solar-light"] .cold-statement{
+ background:var(--panel-solid);border-color:var(--line);
+ box-shadow:0 10px 34px -22px rgba(13,20,32,.4)}
+:root[data-theme="solar-light"] .hero-ticker{background:rgba(255,255,255,.8);border-color:var(--line)}
+/* outline display type reads as invisible on white */
+:root[data-theme="solar-light"] .title-orbit,
+:root[data-theme="solar-light"] h2 .title-zh,
+:root[data-theme="solar-light"] .closing-title-zh{
+ -webkit-text-stroke-color:rgba(13,20,32,.42);color:transparent}
+:root[data-theme="solar-light"] .hero-index,
+:root[data-theme="solar-light"] .board-grid{opacity:.5}
+:root[data-theme="solar-light"] .primary-action{color:#04150f}
+:root[data-theme="solar-light"] .sun-core,
+:root[data-theme="solar-light"] .closing-sun i{filter:saturate(.85) brightness(.92)}
+:root[data-theme="solar-light"] .live-mark{color:var(--muted)}
+/* theme switch button */
+
+/* --- light-mode contrast fixes --- */
+:root[data-theme="solar-light"] .hero h1 > span:first-child{color:#0d1420;-webkit-text-fill-color:#0d1420}
+:root[data-theme="solar-light"] .hero h1 .title-orbit{-webkit-text-fill-color:transparent;color:transparent;-webkit-text-stroke-color:rgba(13,20,32,.34)}
+:root[data-theme="solar-light"] .hero h1 .title-orbit b{-webkit-text-fill-color:#0e9e7c;color:#0e9e7c}
+:root[data-theme="solar-light"] .hero-subtitle{color:#1b2736}
+:root[data-theme="solar-light"] .hero-subtitle strong{color:#0e7d63}
+:root[data-theme="solar-light"] .hero-subtitle.zh{color:#3d4d60}
+:root[data-theme="solar-light"] nav a,
+:root[data-theme="solar-light"] nav a b{color:#1b2736}
+:root[data-theme="solar-light"] nav a span{color:#7c8b9c}
+:root[data-theme="solar-light"] nav a:hover b{color:#0e9e7c}
+:root[data-theme="solar-light"] .primary-action{background:#0e9e7c;border-color:#0e9e7c}
+:root[data-theme="solar-light"] .primary-action,
+:root[data-theme="solar-light"] .primary-action span,
+:root[data-theme="solar-light"] .primary-action small,
+:root[data-theme="solar-light"] .primary-action i{color:#ffffff;-webkit-text-fill-color:#ffffff}
+/* the secondary (outlined) CTA keeps a light background */
+:root[data-theme="solar-light"] .hero-actions .primary-action + .primary-action{
+ background:#ffffff;border:1px solid #0e9e7c}
+:root[data-theme="solar-light"] .hero-actions .primary-action + .primary-action span,
+:root[data-theme="solar-light"] .hero-actions .primary-action + .primary-action small,
+:root[data-theme="solar-light"] .hero-actions .primary-action + .primary-action i{
+ color:#0b7a5f;-webkit-text-fill-color:#0b7a5f}
+:root[data-theme="solar-light"] .manifest{background:#eef2f7;border-color:var(--line)}
+:root[data-theme="solar-light"] .manifest span,
+:root[data-theme="solar-light"] .manifest small{color:#5a6a7d}
+:root[data-theme="solar-light"] .manifest strong{color:#0d1420}
+:root[data-theme="solar-light"] .hero-ticker div span{color:#0d1420}
+:root[data-theme="solar-light"] .hero-ticker div.accent span{color:#0b7a5f}
+:root[data-theme="solar-light"] .hero-ticker small b{color:#5a6a7d}
+:root[data-theme="solar-light"] .eyebrow span{color:#0b7a5f}
+:root[data-theme="solar-light"] .hero-index{color:rgba(13,20,32,.25)}
+:root[data-theme="solar-light"] .section-kicker span{color:#0b7a5f}
+:root[data-theme="solar-light"] h2,
+:root[data-theme="solar-light"] h3,
+:root[data-theme="solar-light"] .section-head p{color:#0d1420}
+:root[data-theme="solar-light"] .section-head p.zh{color:#3d4d60}
+:root[data-theme="solar-light"] .live-mark{color:#7c8b9c}
+:root[data-theme="solar-light"] .language-switch button{color:#3d4d60}
+:root[data-theme="solar-light"] .language-switch button.is-active{background:#0e9e7c;color:#fff}
+
+.theme-switch{margin-left:.5rem;display:inline-flex;align-items:center;gap:.4rem;cursor:pointer;
+ background:transparent;border:1px solid var(--line-strong);color:var(--ink);border-radius:999px;
+ padding:.42rem .8rem;font:600 11px/1 Inter,system-ui,sans-serif;letter-spacing:.08em;
+ transition:border-color .18s,background .18s}
+.theme-switch:hover{border-color:var(--mint);background:rgba(120,247,212,.08)}
+</style></head> <body> <a class="skip-link" href="#main">Skip to content / 跳至正文</a> <div class="cosmos" aria-hidden="true"> <div class="aurora aurora-a"></div> <div class="aurora aurora-b"></div> <div class="stars stars-a"></div> <div class="stars stars-b"></div> </div> <header class="topbar"> <a class="brand" href="#top" aria-label="ScienceAccelBench home"> <span class="brand-sigil"><i></i></span> <span><b>SCIENCE<span>ACCEL</span>BENCH</b><small>BENCHMARK</small></span> </a> <nav aria-label="Main navigation / 主导航"> <a href="#funnel"><span>01</span><b data-lang="en">CORPUS</b><i class="lang-divider">/</i><b data-lang="zh">语料</b></a> <a href="#atlas"><span>02</span><b data-lang="en">ATLAS</b><i class="lang-divider">/</i><b data-lang="zh">图谱</b></a> <a href="#translation"><span>03</span><b data-lang="en">TRANSLATE</b><i class="lang-divider">/</i><b data-lang="zh">迁移</b></a> <a href="#sankey"><span>04</span><b data-lang="en">SANKEY</b><i class="lang-divider">/</i><b data-lang="zh">桑基图</b></a> </nav> <div class="header-tools"> <div class="language-switch" role="group" aria-label="Language mode / 语言模式"> <button type="button" data-language-mode="en" aria-pressed="false">EN</button> <button type="button" data-language-mode="dual" class="is-active" aria-pressed="true">中·EN</button> <button type="button" data-language-mode="zh" aria-pressed="false">中文</button> </div> <button type="button" class="theme-switch" id="themeToggle" aria-label="Toggle light/dark theme"><span id="themeIcon">☀</span><span id="themeLabel">LIGHT</span></button> <div class="live-mark"><i></i><span>AURORA DARK</span><b>· 2026.08.15</b></div> </div> </header> <main id="main"> <section class="hero" id="top" aria-labelledby="hero-title"> <div class="hero-index" aria-hidden="true">SAB—H / 001</div> <div class="hero-copy"> <p class="eyebrow"><span data-lang="en">AI × SCIENTIFIC COMPUTING</span><span data-lang="zh">人工智能 × 科学计算</span></p> <h1 id="hero-title"> <span>ScienceAccelBench</span> <span class="title-orbit"><b>·</b> CPU→GPU</span> </h1> <p class="hero-subtitle" data-lang="en">
 A benchmark for AI <strong>CPU → GPU</strong> code translation,<br>
-rooted in heliophysics and solar-astrophysics HPC.
-</p> <p class="hero-subtitle zh" data-lang="zh">面向高性能科学计算的 AI 代码加速基准<br>源自日球物理与太阳天体物理真实代码生态</p> <div class="hero-actions"> <a class="primary-action" href="#funnel"><span data-lang="en">Explore the corpus</span><small data-lang="zh">探索语料</small><i>↘</i></a> <a class="primary-action" href="./sankey.html" style="background:transparent;border:1px solid rgba(120,247,212,.45);color:#78f7d4"><span data-lang="en">View Sankey flow</span><small data-lang="zh">查看桑基流图</small><i>↗</i></a> <div class="manifest"><span>MANIFEST / 清单</span><strong>4,082</strong><small>HIGH-COMPUTE · 高算力仓库</small></div> </div> </div> <div class="solar-field" aria-hidden="true"> <div class="solar-coordinates"><span>+90°</span><span>0°</span><span>−90°</span></div> <div class="orbit orbit-outer"><i></i></div> <div class="orbit orbit-mid"></div> <div class="orbit orbit-inner"></div> <div class="sun-core"> <span>CPU</span> <b>→</b> <span>GPU</span> <small>ACCELERATION<br>VECTOR</small> </div> <div class="orbital-label label-a">PARALLEL VALUE</div> <div class="orbital-label label-b">SOLAR / HPC</div> </div> <div class="hero-ticker" aria-label="Key corpus facts / 核心语料数据"> <div><span>487,329</span><small><b data-lang="en">PAPERS JUDGED</b><b data-lang="zh">已评估论文</b></small></div> <i></i> <div><span>86,476</span><small><b data-lang="en">SIMULATION PAPERS</b><b data-lang="zh">模拟论文</b></small></div> <i></i> <div><span>6,980</span><small><b data-lang="en">UNIQUE REPOSITORIES</b><b data-lang="zh">独立代码仓库</b></small></div> <i></i> <div class="accent"><span>4,082</span><small><b data-lang="en">HIGH-COMPUTE CORE</b><b data-lang="zh">高算力核心语料</b></small></div> </div> </section> <section class="funnel-section section-wrap" id="funnel" aria-labelledby="funnel-title"> <div class="section-kicker"><span data-lang="en">01 / CORPUS SIGNAL</span><span data-lang="zh">01 / 语料信号</span></div> <div class="section-head"> <h2 id="funnel-title"><span data-lang="en">From the literature horizon<br><em>to benchmark-grade code.</em></span><span class="title-zh" data-lang="zh">从论文星海<br><em>到基准级代码。</em></span></h2> <p data-lang="en"><b>Five evidence gates.</b> Every stage tightens the signal—from scientific paper to parallel, compute-bound repository.</p> <p class="zh" data-lang="zh"><b>五重证据门。</b> 从科学论文逐层收敛至并行、计算密集型代码仓库。</p> </div> <div class="funnel-panel"> <div class="panel-topline"> <div><i></i><span data-lang="en">PIPELINE / SELECTION FUNNEL</span><span data-lang="zh">管线 / 筛选漏斗</span></div> <div><span data-lang="en">WIDTHS COMPRESSED FOR LEGIBILITY</span><span data-lang="zh">宽度经可读性压缩</span></div> </div> <div class="funnel-layout"> <div id="funnelChart" role="img" aria-label="Interactive funnel: 487,329 papers judged, 86,476 with simulation, 13,452 parallel simulation, 6,980 unique repositories, and 4,082 high-compute repositories."></div> <div class="funnel-steps" aria-label="Funnel stages / 漏斗阶段"> <button class="funnel-step" type="button" data-index="0" aria-label="Papers judged / 已评估论文: 487,329"> <span class="step-code">01</span> <span class="step-name"><b data-lang="en">Papers judged</b><small data-lang="zh">已评估论文</small></span> <strong>487,329</strong> <span class="step-share">100%</span> <span class="step-note"><b data-lang="en">The literature horizon</b><b data-lang="zh">论文知识边界</b></span> </button><button class="funnel-step" type="button" data-index="1" aria-label="With simulation / 包含数值模拟: 86,476"> <span class="step-code">02</span> <span class="step-name"><b data-lang="en">With simulation</b><small data-lang="zh">包含数值模拟</small></span> <strong>86,476</strong> <span class="step-share">17.7%</span> <span class="step-note"><b data-lang="en">Computational science detected</b><b data-lang="zh">识别计算科学</b></span> </button><button class="funnel-step" type="button" data-index="2" aria-label="Parallel simulation / 并行模拟: 13,452"> <span class="step-code">03</span> <span class="step-name"><b data-lang="en">Parallel simulation</b><small data-lang="zh">并行模拟</small></span> <strong>13,452</strong> <span class="step-share">2.76%</span> <span class="step-note"><b data-lang="en">Parallel value confirmed</b><b data-lang="zh">确认并行价值</b></span> </button><button class="funnel-step" type="button" data-index="3" aria-label="Unique code repositories / 独立代码仓库: 6,980"> <span class="step-code">04</span> <span class="step-name"><b data-lang="en">Unique code repositories</b><small data-lang="zh">独立代码仓库</small></span> <strong>6,980</strong> <span class="step-share">1.43%</span> <span class="step-note"><b data-lang="en">Deduplicated open code</b><b data-lang="zh">开放代码去重</b></span> </button><button class="funnel-step" type="button" data-index="4" aria-label="High-compute corpus / 高算力基准语料: 4,082"> <span class="step-code">05</span> <span class="step-name"><b data-lang="en">High-compute corpus</b><small data-lang="zh">高算力基准语料</small></span> <strong>4,082</strong> <span class="step-share">0.84%</span> <span class="step-note"><b data-lang="en">Benchmark-grade HPC</b><b data-lang="zh">基准级高性能计算</b></span> </button> </div> </div> <div class="funnel-foot"> <span><b data-lang="en">SOURCE SNAPSHOT</b><b data-lang="zh">数据快照</b> <strong>2026—08—15</strong></span> <span><b data-lang="en">FINAL YIELD</b><b data-lang="zh">最终入选率</b> <strong>0.84%</strong></span> </div> </div> </section> <section class="atlas-section section-wrap" id="atlas" aria-labelledby="atlas-title"> <div class="section-kicker"><span data-lang="en">02 / REPOSITORY ATLAS</span><span data-lang="zh">02 / 仓库图谱</span></div> <div class="section-head compact"> <h2 id="atlas-title"><span data-lang="en">A long-tail atlas of<br><em>computational science.</em></span><span class="title-zh" data-lang="zh">计算科学的<br><em>长尾图谱。</em></span></h2> <div class="head-aside"> <p data-lang="en">Not a popularity contest. The collection prizes <b>parallel value</b>, technical depth, and real acceleration opportunity.</p> <p class="zh" data-lang="zh">不以热度论英雄：<b>并行价值</b>、技术深度与真实加速潜力才是核心。</p> </div> </div> <div class="stats-grid"> <article class="stat-card card-1" style="--accent:#78f7d4"> <div class="card-head"> <span><b data-lang="en">TYPE</b><b data-lang="zh">类型</b></span> <i></i> <small><b data-lang="en">6,980 classified</b><b data-lang="zh">6,980 个已分类</b></small> </div> <h3><b data-lang="en">Repository role</b><small data-lang="zh">仓库角色</small></h3> <div class="stat-rows"> <div class="stat-row" style="--w:100%; --delay:0ms"> <div class="stat-label"><span><b data-lang="en">Solver</b><small data-lang="zh">求解器</small></span><strong>2,925</strong></div> <div class="bar"><i></i></div> </div><div class="stat-row" style="--w:56.7%; --delay:70ms"> <div class="stat-label"><span><b data-lang="en">Framework</b><small data-lang="zh">框架</small></span><strong>1,658</strong></div> <div class="bar"><i></i></div> </div><div class="stat-row" style="--w:36.4%; --delay:140ms"> <div class="stat-label"><span><b data-lang="en">Analysis</b><small data-lang="zh">分析</small></span><strong>1,064</strong></div> <div class="bar"><i></i></div> </div><div class="stat-row" style="--w:20.7%; --delay:210ms"> <div class="stat-label"><span><b data-lang="en">Workflow</b><small data-lang="zh">工作流</small></span><strong>606</strong></div> <div class="bar"><i></i></div> </div><div class="stat-row" style="--w:14.5%; --delay:280ms"> <div class="stat-label"><span><b data-lang="en">Benchmark data</b><small data-lang="zh">基准数据</small></span><strong>424</strong></div> <div class="bar"><i></i></div> </div><div class="stat-row" style="--w:10.4%; --delay:350ms"> <div class="stat-label"><span><b data-lang="en">Other</b><small data-lang="zh">其他</small></span><strong>303</strong></div> <div class="bar"><i></i></div> </div> </div> <div class="card-no">01</div> </article><article class="stat-card card-2" style="--accent:#a9a6ff"> <div class="card-head"> <span><b data-lang="en">HEAT</b><b data-lang="zh">热度</b></span> <i></i> <small><b data-lang="en">Cold is welcome</b><b data-lang="zh">欢迎冷门代码</b></small> </div> <h3><b data-lang="en">Discovery temperature</b><small data-lang="zh">发现热度</small></h3> <div class="stat-rows"> <div class="stat-row" style="--w:100%; --delay:0ms"> <div class="stat-label"><span><b data-lang="en">Ultra-cold</b><small data-lang="zh">极冷门</small></span><strong>5,681</strong></div> <div class="bar"><i></i></div> </div><div class="stat-row" style="--w:15.6%; --delay:70ms"> <div class="stat-label"><span><b data-lang="en">Cold</b><small data-lang="zh">冷门</small></span><strong>889</strong></div> <div class="bar"><i></i></div> </div><div class="stat-row" style="--w:5.4%; --delay:140ms"> <div class="stat-label"><span><b data-lang="en">Mid</b><small data-lang="zh">中等</small></span><strong>307</strong></div> <div class="bar"><i></i></div> </div><div class="stat-row" style="--w:1.8%; --delay:210ms"> <div class="stat-label"><span><b data-lang="en">Hot</b><small data-lang="zh">热门</small></span><strong>103</strong></div> <div class="bar"><i></i></div> </div> </div> <div class="card-no">02</div> </article><article class="stat-card card-3" style="--accent:#ffbc76"> <div class="card-head"> <span><b data-lang="en">HW</b><b data-lang="zh">硬件</b></span> <i></i> <small><b data-lang="en">6,979 tagged</b><b data-lang="zh">6,979 个已标注</b></small> </div> <h3><b data-lang="en">Acceleration state</b><small data-lang="zh">硬件加速状态</small></h3> <div class="stat-rows"> <div class="stat-row" style="--w:100%; --delay:0ms"> <div class="stat-label"><span><b data-lang="en">CPU only</b><small data-lang="zh">仅 CPU</small></span><strong>4,867</strong></div> <div class="bar"><i></i></div> </div><div class="stat-row" style="--w:28.6%; --delay:70ms"> <div class="stat-label"><span><b data-lang="en">Has GPU</b><small data-lang="zh">已有 GPU</small></span><strong>1,390</strong></div> <div class="bar"><i></i></div> </div><div class="stat-row" style="--w:14.8%; --delay:140ms"> <div class="stat-label"><span><b data-lang="en">Partial GPU</b><small data-lang="zh">部分 GPU</small></span><strong>722</strong></div> <div class="bar"><i></i></div> </div> </div> <div class="card-no">03</div> </article><article class="stat-card card-4" style="--accent:#7cc8ff"> <div class="card-head"> <span><b data-lang="en">LANG</b><b data-lang="zh">语言</b></span> <i></i> <small><b data-lang="en">Primary language</b><b data-lang="zh">主要编程语言</b></small> </div> <h3><b data-lang="en">Top languages</b><small data-lang="zh">主要语言</small></h3> <div class="stat-rows"> <div class="stat-row" style="--w:100%; --delay:0ms"> <div class="stat-label"><span><b data-lang="en">Python</b><small data-lang="zh">Python</small></span><strong>2,644</strong></div> <div class="bar"><i></i></div> </div><div class="stat-row" style="--w:47.4%; --delay:70ms"> <div class="stat-label"><span><b data-lang="en">C++</b><small data-lang="zh">C++</small></span><strong>1,254</strong></div> <div class="bar"><i></i></div> </div><div class="stat-row" style="--w:32.2%; --delay:140ms"> <div class="stat-label"><span><b data-lang="en">Fortran</b><small data-lang="zh">Fortran</small></span><strong>851</strong></div> <div class="bar"><i></i></div> </div><div class="stat-row" style="--w:6.8%; --delay:210ms"> <div class="stat-label"><span><b data-lang="en">Julia</b><small data-lang="zh">Julia</small></span><strong>181</strong></div> <div class="bar"><i></i></div> </div> </div> <div class="card-no">04</div> </article> </div> <div class="cold-statement"> <div class="cold-mark"><span>−273°</span><i></i></div> <p><span data-lang="en">COLD / OBSCURE CODES WELCOME</span><b data-lang="zh">冷门代码，正是前沿。</b></p> <div class="cold-copy-wrap"><p class="cold-copy" data-lang="en">5,681 ultra-cold repositories make the benchmark resistant to memorization—and closer to the real scientific long tail.</p><p class="cold-copy cold-copy-zh" data-lang="zh">5,681 个极冷门仓库，让基准更难依靠记忆，更接近真实的科学长尾。</p></div> <span class="cold-count">81.4%<small><b data-lang="en">ULTRA-COLD</b><b data-lang="zh">极冷门</b></small></span> </div> </section> <section class="translation-section section-wrap" id="translation" aria-labelledby="translation-title"> <div class="section-kicker"><span data-lang="en">03 / TRANSLATION PROGRAM</span><span data-lang="zh">03 / 迁移计划</span></div> <div class="section-head translation-head"> <h2 id="translation-title"><span data-lang="en">Train on reality.<br><em>Translate for discovery.</em></span><span class="title-zh" data-lang="zh">以真实代码训练，<br><em>为科学发现迁移。</em></span></h2> <p data-lang="en">The benchmark pairs an expansive target lane with GPU-native references—without requiring a GPU version for admission.</p> <p class="zh" data-lang="zh">以广阔迁移目标对照原生 GPU 参考实现；入选不以已有 GPU 版本为前提。</p> </div> <div class="translation-board"> <div class="board-grid" aria-hidden="true"></div> <div class="target candidate-card"> <div class="candidate-top"><span><b data-lang="en">A / TARGET LANE</b><b data-lang="zh">A / 目标通道</b></span><i>CPU—BOUND</i></div> <div class="candidate-number">5,589</div> <h3><b data-lang="en">Translatable targets</b><small data-lang="zh">可迁移目标</small></h3> <div class="candidate-formula"> <span><b>4,867</b><i data-lang="en">CPU-only</i><i data-lang="zh">仅 CPU</i></span> <i>+</i> <span><b>722</b><i data-lang="en">Partial-GPU</i><i data-lang="zh">部分 GPU</i></span> </div> <p data-lang="en">Real parallel scientific codes with meaningful acceleration headroom.</p> <p data-lang="zh">具备显著加速空间的真实并行科学代码。</p> </div> <div class="translation-vector" aria-hidden="true"> <span><b data-lang="en">AI TRANSLATION</b><b data-lang="zh">AI 代码迁移</b></span> <div><i></i><b>→</b></div> <small><b data-lang="en">SEMANTICS · CORRECTNESS · SPEED</b><b data-lang="zh">语义 · 正确性 · 速度</b></small> </div> <div class="reference candidate-card"> <div class="candidate-top"><span><b data-lang="en">B / REFERENCE LANE</b><b data-lang="zh">B / 参考通道</b></span><i>GPU—NATIVE</i></div> <div class="candidate-number">1,390</div> <h3><b data-lang="en">Native references</b><small data-lang="zh">GPU 原生参考</small></h3> <div class="reference-orbit"> <span></span><span></span><span></span> <b>REF</b> </div> <p data-lang="en">Ground-truth patterns for studying idiomatic kernels, memory movement, and parallel structure.</p> <p data-lang="zh">用于研究惯用内核、内存移动与并行结构的真实参考模式。</p> </div> <div class="board-footer"> <p><span><b data-lang="en">ADMISSION CRITERION</b><b data-lang="zh">入选标准</b></span><b data-lang="en">High-performance compute with parallel value</b><b data-lang="zh">具备并行价值的高性能计算</b></p> <p class="criterion-note"><span data-lang="en">GPU version <strong>not required</strong></span><span data-lang="zh"><strong>无需</strong>已有 GPU 实现</span></p> </div> </div> <div class="evaluation-ribbon" aria-label="Evaluation dimensions / 评测维度"> <div><span>01</span><b data-lang="en">Semantic fidelity</b><small data-lang="zh">语义保真</small></div> <div><span>02</span><b data-lang="en">Numerical correctness</b><small data-lang="zh">数值正确</small></div> <div><span>03</span><b data-lang="en">Parallel structure</b><small data-lang="zh">并行结构</small></div> <div><span>04</span><b data-lang="en">Acceleration</b><small data-lang="zh">性能加速</small></div> </div> </section> <section class="closing section-wrap" aria-labelledby="closing-title"> <div class="closing-sun" aria-hidden="true"><i></i><i></i><i></i></div> <p>SCIENCEACCELBENCH × HELIO</p> <h2 id="closing-title"><span data-lang="en">The next scientific instrument<br>is a <em>compiler that understands.</em></span><span class="closing-title-zh" data-lang="zh">下一代科学仪器，<br>是<em>能够理解代码的编译器。</em></span></h2> <p class="zh" data-lang="zh">从 CPU 到 GPU，让 AI 加速科学发现。</p> <div class="closing-meta"> <span>487K <b data-lang="en">PAPERS</b><b data-lang="zh">论文</b></span><i></i><span>6,980 <b data-lang="en">REPOSITORIES</b><b data-lang="zh">仓库</b></span><i></i><span>4,082 <b data-lang="en">HPC CORE</b><b data-lang="zh">高算力核心</b></span> </div> </section> </main> <footer> <a class="brand footer-brand" href="#top"><span class="brand-sigil"><i></i></span><span><b>SCIENCE<span>ACCEL</span>BENCH</b><small>× HELIO</small></span></a> <p><span data-lang="en">Benchmarking AI for accelerated scientific software</span><span data-lang="zh">面向科学软件加速的 AI 基准</span></p> <div><span><b data-lang="en">PIPELINE SNAPSHOT</b><b data-lang="zh">管线数据快照</b></span><strong>15 AUG 2026</strong></div> </footer> <script type="module" src="./assets/index.astro_astro_type_script_index_0_lang.CTmN3CnZ.js"></script> </body> </html> 
+rooted in real high-performance scientific computing.
+</p> <p class="hero-subtitle zh" data-lang="zh">面向高性能科学计算的 AI 代码加速基准<br>源自真实高性能科学计算代码生态</p> <div class="hero-actions"> <a class="primary-action" href="#funnel"><span data-lang="en">Explore the corpus</span><small data-lang="zh">探索语料</small><i>↘</i></a> <a class="primary-action" href="#sankey" style="background:transparent;border:1px solid rgba(120,247,212,.45);color:#78f7d4"><span data-lang="en">View Sankey flow</span><small data-lang="zh">查看桑基流图</small><i>↗</i></a> <div class="manifest"><span>MANIFEST / 清单</span><strong>4,082</strong><small>HIGH-COMPUTE · 高算力仓库</small></div> </div> </div> <div class="solar-field" aria-hidden="true"> <div class="solar-coordinates"><span>+90°</span><span>0°</span><span>−90°</span></div> <div class="orbit orbit-outer"><i></i></div> <div class="orbit orbit-mid"></div> <div class="orbit orbit-inner"></div> <div class="sun-core"> <span>CPU</span> <b>→</b> <span>GPU</span> <small>ACCELERATION<br>VECTOR</small> </div> <div class="orbital-label label-a">PARALLEL VALUE</div> <div class="orbital-label label-b">SOLAR / HPC</div> </div> <div class="hero-ticker" aria-label="Key corpus facts / 核心语料数据"> <div><span>487,329</span><small><b data-lang="en">PAPERS JUDGED</b><b data-lang="zh">已评估论文</b></small></div> <i></i> <div><span>86,476</span><small><b data-lang="en">SIMULATION PAPERS</b><b data-lang="zh">模拟论文</b></small></div> <i></i> <div><span>6,980</span><small><b data-lang="en">UNIQUE REPOSITORIES</b><b data-lang="zh">独立代码仓库</b></small></div> <i></i> <div class="accent"><span>4,082</span><small><b data-lang="en">HIGH-COMPUTE CORE</b><b data-lang="zh">高算力核心语料</b></small></div> </div> </section> <section class="funnel-section section-wrap" id="funnel" aria-labelledby="funnel-title"> <div class="section-kicker"><span data-lang="en">01 / CORPUS SIGNAL</span><span data-lang="zh">01 / 语料信号</span></div> <div class="section-head"> <h2 id="funnel-title"><span data-lang="en">From the literature horizon<br><em>to benchmark-grade code.</em></span><span class="title-zh" data-lang="zh">从论文星海<br><em>到基准级代码。</em></span></h2> <p data-lang="en"><b>Five evidence gates.</b> Every stage tightens the signal—from scientific paper to parallel, compute-bound repository.</p> <p class="zh" data-lang="zh"><b>五重证据门。</b> 从科学论文逐层收敛至并行、计算密集型代码仓库。</p> </div> <div class="funnel-panel"> <div class="panel-topline"> <div><i></i><span data-lang="en">PIPELINE / SELECTION FUNNEL</span><span data-lang="zh">管线 / 筛选漏斗</span></div> <div><span data-lang="en">WIDTHS COMPRESSED FOR LEGIBILITY</span><span data-lang="zh">宽度经可读性压缩</span></div> </div> <div class="funnel-layout"> <div id="funnelChart" role="img" aria-label="Interactive funnel: 487,329 papers judged, 86,476 with simulation, 13,452 parallel simulation, 6,980 unique repositories, and 4,082 high-compute repositories."></div> <div class="funnel-steps" aria-label="Funnel stages / 漏斗阶段"> <button class="funnel-step" type="button" data-index="0" aria-label="Papers judged / 已评估论文: 487,329"> <span class="step-code">01</span> <span class="step-name"><b data-lang="en">Papers judged</b><small data-lang="zh">已评估论文</small></span> <strong>487,329</strong> <span class="step-share">100%</span> <span class="step-note"><b data-lang="en">The literature horizon</b><b data-lang="zh">论文知识边界</b></span> </button><button class="funnel-step" type="button" data-index="1" aria-label="With simulation / 包含数值模拟: 86,476"> <span class="step-code">02</span> <span class="step-name"><b data-lang="en">With simulation</b><small data-lang="zh">包含数值模拟</small></span> <strong>86,476</strong> <span class="step-share">17.7%</span> <span class="step-note"><b data-lang="en">Computational science detected</b><b data-lang="zh">识别计算科学</b></span> </button><button class="funnel-step" type="button" data-index="2" aria-label="Parallel simulation / 并行模拟: 13,452"> <span class="step-code">03</span> <span class="step-name"><b data-lang="en">Parallel simulation</b><small data-lang="zh">并行模拟</small></span> <strong>13,452</strong> <span class="step-share">2.76%</span> <span class="step-note"><b data-lang="en">Parallel value confirmed</b><b data-lang="zh">确认并行价值</b></span> </button><button class="funnel-step" type="button" data-index="3" aria-label="Unique code repositories / 独立代码仓库: 6,980"> <span class="step-code">04</span> <span class="step-name"><b data-lang="en">Unique code repositories</b><small data-lang="zh">独立代码仓库</small></span> <strong>6,980</strong> <span class="step-share">1.43%</span> <span class="step-note"><b data-lang="en">Deduplicated open code</b><b data-lang="zh">开放代码去重</b></span> </button><button class="funnel-step" type="button" data-index="4" aria-label="High-compute corpus / 高算力基准语料: 4,082"> <span class="step-code">05</span> <span class="step-name"><b data-lang="en">High-compute corpus</b><small data-lang="zh">高算力基准语料</small></span> <strong>4,082</strong> <span class="step-share">0.84%</span> <span class="step-note"><b data-lang="en">Benchmark-grade HPC</b><b data-lang="zh">基准级高性能计算</b></span> </button> </div> </div> <div class="funnel-foot"> <span><b data-lang="en">SOURCE SNAPSHOT</b><b data-lang="zh">数据快照</b> <strong>2026—08—15</strong></span> <span><b data-lang="en">FINAL YIELD</b><b data-lang="zh">最终入选率</b> <strong>0.84%</strong></span> </div> </div> </section> <section class="atlas-section section-wrap" id="atlas" aria-labelledby="atlas-title"> <div class="section-kicker"><span data-lang="en">02 / REPOSITORY ATLAS</span><span data-lang="zh">02 / 仓库图谱</span></div> <div class="section-head compact"> <h2 id="atlas-title"><span data-lang="en">A long-tail atlas of<br><em>computational science.</em></span><span class="title-zh" data-lang="zh">计算科学的<br><em>长尾图谱。</em></span></h2> <div class="head-aside"> <p data-lang="en">Not a popularity contest. The collection prizes <b>parallel value</b>, technical depth, and real acceleration opportunity.</p> <p class="zh" data-lang="zh">不以热度论英雄：<b>并行价值</b>、技术深度与真实加速潜力才是核心。</p> </div> </div> <div class="stats-grid"> <article class="stat-card card-1" style="--accent:#78f7d4"> <div class="card-head"> <span><b data-lang="en">TYPE</b><b data-lang="zh">类型</b></span> <i></i> <small><b data-lang="en">6,980 classified</b><b data-lang="zh">6,980 个已分类</b></small> </div> <h3><b data-lang="en">Repository role</b><small data-lang="zh">仓库角色</small></h3> <div class="stat-rows"> <div class="stat-row" style="--w:100%; --delay:0ms"> <div class="stat-label"><span><b data-lang="en">Solver</b><small data-lang="zh">求解器</small></span><strong>2,925</strong></div> <div class="bar"><i></i></div> </div><div class="stat-row" style="--w:56.7%; --delay:70ms"> <div class="stat-label"><span><b data-lang="en">Framework</b><small data-lang="zh">框架</small></span><strong>1,658</strong></div> <div class="bar"><i></i></div> </div><div class="stat-row" style="--w:36.4%; --delay:140ms"> <div class="stat-label"><span><b data-lang="en">Analysis</b><small data-lang="zh">分析</small></span><strong>1,064</strong></div> <div class="bar"><i></i></div> </div><div class="stat-row" style="--w:20.7%; --delay:210ms"> <div class="stat-label"><span><b data-lang="en">Workflow</b><small data-lang="zh">工作流</small></span><strong>606</strong></div> <div class="bar"><i></i></div> </div><div class="stat-row" style="--w:14.5%; --delay:280ms"> <div class="stat-label"><span><b data-lang="en">Benchmark data</b><small data-lang="zh">基准数据</small></span><strong>424</strong></div> <div class="bar"><i></i></div> </div><div class="stat-row" style="--w:10.4%; --delay:350ms"> <div class="stat-label"><span><b data-lang="en">Other</b><small data-lang="zh">其他</small></span><strong>303</strong></div> <div class="bar"><i></i></div> </div> </div> <div class="card-no">01</div> </article><article class="stat-card card-2" style="--accent:#a9a6ff"> <div class="card-head"> <span><b data-lang="en">HEAT</b><b data-lang="zh">热度</b></span> <i></i> <small><b data-lang="en">Cold is welcome</b><b data-lang="zh">欢迎冷门代码</b></small> </div> <h3><b data-lang="en">Discovery temperature</b><small data-lang="zh">发现热度</small></h3> <div class="stat-rows"> <div class="stat-row" style="--w:100%; --delay:0ms"> <div class="stat-label"><span><b data-lang="en">Ultra-cold</b><small data-lang="zh">极冷门</small></span><strong>5,681</strong></div> <div class="bar"><i></i></div> </div><div class="stat-row" style="--w:15.6%; --delay:70ms"> <div class="stat-label"><span><b data-lang="en">Cold</b><small data-lang="zh">冷门</small></span><strong>889</strong></div> <div class="bar"><i></i></div> </div><div class="stat-row" style="--w:5.4%; --delay:140ms"> <div class="stat-label"><span><b data-lang="en">Mid</b><small data-lang="zh">中等</small></span><strong>307</strong></div> <div class="bar"><i></i></div> </div><div class="stat-row" style="--w:1.8%; --delay:210ms"> <div class="stat-label"><span><b data-lang="en">Hot</b><small data-lang="zh">热门</small></span><strong>103</strong></div> <div class="bar"><i></i></div> </div> </div> <div class="card-no">02</div> </article><article class="stat-card card-3" style="--accent:#ffbc76"> <div class="card-head"> <span><b data-lang="en">HW</b><b data-lang="zh">硬件</b></span> <i></i> <small><b data-lang="en">6,979 tagged</b><b data-lang="zh">6,979 个已标注</b></small> </div> <h3><b data-lang="en">Acceleration state</b><small data-lang="zh">硬件加速状态</small></h3> <div class="stat-rows"> <div class="stat-row" style="--w:100%; --delay:0ms"> <div class="stat-label"><span><b data-lang="en">CPU only</b><small data-lang="zh">仅 CPU</small></span><strong>4,867</strong></div> <div class="bar"><i></i></div> </div><div class="stat-row" style="--w:28.6%; --delay:70ms"> <div class="stat-label"><span><b data-lang="en">Has GPU</b><small data-lang="zh">已有 GPU</small></span><strong>1,390</strong></div> <div class="bar"><i></i></div> </div><div class="stat-row" style="--w:14.8%; --delay:140ms"> <div class="stat-label"><span><b data-lang="en">Partial GPU</b><small data-lang="zh">部分 GPU</small></span><strong>722</strong></div> <div class="bar"><i></i></div> </div> </div> <div class="card-no">03</div> </article><article class="stat-card card-4" style="--accent:#7cc8ff"> <div class="card-head"> <span><b data-lang="en">LANG</b><b data-lang="zh">语言</b></span> <i></i> <small><b data-lang="en">Primary language</b><b data-lang="zh">主要编程语言</b></small> </div> <h3><b data-lang="en">Top languages</b><small data-lang="zh">主要语言</small></h3> <div class="stat-rows"> <div class="stat-row" style="--w:100%; --delay:0ms"> <div class="stat-label"><span><b data-lang="en">Python</b><small data-lang="zh">Python</small></span><strong>2,644</strong></div> <div class="bar"><i></i></div> </div><div class="stat-row" style="--w:47.4%; --delay:70ms"> <div class="stat-label"><span><b data-lang="en">C++</b><small data-lang="zh">C++</small></span><strong>1,254</strong></div> <div class="bar"><i></i></div> </div><div class="stat-row" style="--w:32.2%; --delay:140ms"> <div class="stat-label"><span><b data-lang="en">Fortran</b><small data-lang="zh">Fortran</small></span><strong>851</strong></div> <div class="bar"><i></i></div> </div><div class="stat-row" style="--w:6.8%; --delay:210ms"> <div class="stat-label"><span><b data-lang="en">Julia</b><small data-lang="zh">Julia</small></span><strong>181</strong></div> <div class="bar"><i></i></div> </div> </div> <div class="card-no">04</div> </article> </div> <div class="cold-statement"> <div class="cold-mark"><span>−273°</span><i></i></div> <p><span data-lang="en">COLD / OBSCURE CODES WELCOME</span><b data-lang="zh">冷门代码，正是前沿。</b></p> <div class="cold-copy-wrap"><p class="cold-copy" data-lang="en">5,681 ultra-cold repositories make the benchmark resistant to memorization—and closer to the real scientific long tail.</p><p class="cold-copy cold-copy-zh" data-lang="zh">5,681 个极冷门仓库，让基准更难依靠记忆，更接近真实的科学长尾。</p></div> <span class="cold-count">81.4%<small><b data-lang="en">ULTRA-COLD</b><b data-lang="zh">极冷门</b></small></span> </div> </section> <section class="translation-section section-wrap" id="translation" aria-labelledby="translation-title"> <div class="section-kicker"><span data-lang="en">03 / TRANSLATION PROGRAM</span><span data-lang="zh">03 / 迁移计划</span></div> <div class="section-head translation-head"> <h2 id="translation-title"><span data-lang="en">Train on reality.<br><em>Translate for discovery.</em></span><span class="title-zh" data-lang="zh">以真实代码训练，<br><em>为科学发现迁移。</em></span></h2> <p data-lang="en">The benchmark pairs an expansive target lane with GPU-native references—without requiring a GPU version for admission.</p> <p class="zh" data-lang="zh">以广阔迁移目标对照原生 GPU 参考实现；入选不以已有 GPU 版本为前提。</p> </div> <div class="translation-board"> <div class="board-grid" aria-hidden="true"></div> <div class="target candidate-card"> <div class="candidate-top"><span><b data-lang="en">A / TARGET LANE</b><b data-lang="zh">A / 目标通道</b></span><i>CPU—BOUND</i></div> <div class="candidate-number">5,589</div> <h3><b data-lang="en">Translatable targets</b><small data-lang="zh">可迁移目标</small></h3> <div class="candidate-formula"> <span><b>4,867</b><i data-lang="en">CPU-only</i><i data-lang="zh">仅 CPU</i></span> <i>+</i> <span><b>722</b><i data-lang="en">Partial-GPU</i><i data-lang="zh">部分 GPU</i></span> </div> <p data-lang="en">Real parallel scientific codes with meaningful acceleration headroom.</p> <p data-lang="zh">具备显著加速空间的真实并行科学代码。</p> </div> <div class="translation-vector" aria-hidden="true"> <span><b data-lang="en">AI TRANSLATION</b><b data-lang="zh">AI 代码迁移</b></span> <div><i></i><b>→</b></div> <small><b data-lang="en">SEMANTICS · CORRECTNESS · SPEED</b><b data-lang="zh">语义 · 正确性 · 速度</b></small> </div> <div class="reference candidate-card"> <div class="candidate-top"><span><b data-lang="en">B / REFERENCE LANE</b><b data-lang="zh">B / 参考通道</b></span><i>GPU—NATIVE</i></div> <div class="candidate-number">1,390</div> <h3><b data-lang="en">Native references</b><small data-lang="zh">GPU 原生参考</small></h3> <div class="reference-orbit"> <span></span><span></span><span></span> <b>REF</b> </div> <p data-lang="en">Ground-truth patterns for studying idiomatic kernels, memory movement, and parallel structure.</p> <p data-lang="zh">用于研究惯用内核、内存移动与并行结构的真实参考模式。</p> </div> <div class="board-footer"> <p><span><b data-lang="en">ADMISSION CRITERION</b><b data-lang="zh">入选标准</b></span><b data-lang="en">High-performance compute with parallel value</b><b data-lang="zh">具备并行价值的高性能计算</b></p> <p class="criterion-note"><span data-lang="en">GPU version <strong>not required</strong></span><span data-lang="zh"><strong>无需</strong>已有 GPU 实现</span></p> </div> </div> <div class="evaluation-ribbon" aria-label="Evaluation dimensions / 评测维度"> <div><span>01</span><b data-lang="en">Semantic fidelity</b><small data-lang="zh">语义保真</small></div> <div><span>02</span><b data-lang="en">Numerical correctness</b><small data-lang="zh">数值正确</small></div> <div><span>03</span><b data-lang="en">Parallel structure</b><small data-lang="zh">并行结构</small></div> <div><span>04</span><b data-lang="en">Acceleration</b><small data-lang="zh">性能加速</small></div> </div> </section>  <section class="sankey-section section-wrap" id="sankey" aria-labelledby="sankey-title">
+ <div class="section-kicker"><span data-lang="en">04 / FLOW DIAGRAM</span><span data-lang="zh">04 / 流向图</span></div>
+ <div class="section-head">
+  <h2 id="sankey-title"><span data-lang="en">The retained flow,<br><em>stage by stage.</em></span><span class="title-zh" data-lang="zh">逐阶段保留的<br><em>数据流。</em></span></h2>
+  <p data-lang="en"><b>Interactive Sankey.</b> Node and ribbon widths scale linearly with real counts — hover any stage for its retention rate.</p>
+  <p class="zh" data-lang="zh"><b>交互式桑基图。</b> 节点与流宽按真实数量线性缩放，悬停任意阶段查看保留率。</p>
+ </div>
+ <div class="sankey-panel">
+  <div class="sankey-topline">
+   <div><i></i><span data-lang="en">PIPELINE / RETAINED FLOW</span><span data-lang="zh">管线 / 保留子集</span></div>
+   <div><span data-lang="en">HOVER FOR STAGE DETAIL</span><span data-lang="zh">悬停查看阶段详情</span></div>
+  </div>
+  <div id="sankeyChart" role="img" aria-label="Sankey flow: 487,329 arXiv papers to 86,476 with simulation, 13,452 parallel simulation, 6,980 unique repositories, 4,082 benchmark-grade high-compute repositories."></div>
+  <div class="sankey-foot">
+   <span data-lang="en">Widths scale linearly with actual counts; ribbons show the subset entering the next stage.</span>
+   <span data-lang="zh">节点与流宽按实际数量线性缩放；连线表示进入下一阶段的保留子集。</span>
+   <span><b>n = 487,329</b></span>
+  </div>
+ </div>
+ </section> <section class="closing section-wrap" aria-labelledby="closing-title"> <div class="closing-sun" aria-hidden="true"><i></i><i></i><i></i></div> <p>SCIENCEACCELBENCH</p> <h2 id="closing-title"><span data-lang="en">The next scientific instrument<br>is a <em>compiler that understands.</em></span><span class="closing-title-zh" data-lang="zh">下一代科学仪器，<br>是<em>能够理解代码的编译器。</em></span></h2> <p class="zh" data-lang="zh">从 CPU 到 GPU，让 AI 加速科学发现。</p> <div class="closing-meta"> <span>487K <b data-lang="en">PAPERS</b><b data-lang="zh">论文</b></span><i></i><span>6,980 <b data-lang="en">REPOSITORIES</b><b data-lang="zh">仓库</b></span><i></i><span>4,082 <b data-lang="en">HPC CORE</b><b data-lang="zh">高算力核心</b></span> </div> </section> </main> <footer> <a class="brand footer-brand" href="#top"><span class="brand-sigil"><i></i></span><span><b>SCIENCE<span>ACCEL</span>BENCH</b><small>BENCHMARK</small></span></a> <p><span data-lang="en">Benchmarking AI for accelerated scientific software</span><span data-lang="zh">面向科学软件加速的 AI 基准</span></p> <div><span><b data-lang="en">PIPELINE SNAPSHOT</b><b data-lang="zh">管线数据快照</b></span><strong>15 AUG 2026</strong></div> </footer> <script type="module" src="./assets/index.astro_astro_type_script_index_0_lang.CTmN3CnZ.js"></script> <script src="./assets/echarts.min.js"></script>
+<script>
+    (function () {
+      'use strict';
+
+      var formatter = new Intl.NumberFormat('en-US');
+      var stages = [
+        { name: 'arXiv 论文', value: 487329, depth: 0, color: '#55d7ff', overall: '100.00%', step: '—' },
+        { name: '有 sim', value: 86476, depth: 1, color: '#678cff', overall: '17.74%', step: '17.74%' },
+        { name: 'parallel sim', value: 13452, depth: 2, color: '#9a7cff', overall: '2.76%', step: '15.56%' },
+        { name: '代码库', value: 6980, depth: 3, color: '#f3b860', overall: '1.43%', step: '51.89%' },
+        { name: '有价值被 benchmark 的代码库', value: 4082, depth: 4, color: '#56dfb3', overall: '0.84%', step: '58.48%' }
+      ];
+
+      var links = stages.slice(0, -1).map(function (stage, index) {
+        var next = stages[index + 1];
+        return {
+          source: stage.name,
+          target: next.name,
+          value: next.value,
+          stepRate: next.step,
+          lineStyle: {
+            color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
+              { offset: 0, color: stage.color },
+              { offset: 1, color: next.color }
+            ]),
+            opacity: 0.64,
+            curveness: 0.56
+          }
+        };
+      });
+
+      var chartElement = document.getElementById('sankeyChart');
+      var chart = echarts.init(chartElement, null, { renderer: 'canvas', devicePixelRatio: Math.max(2, window.devicePixelRatio || 1) });
+
+      var option = {
+        animation: true,
+        animationDuration: 1300,
+        animationDurationUpdate: 700,
+        animationEasing: 'cubicOut',
+        backgroundColor: 'transparent',
+        tooltip: {
+          trigger: 'item',
+          confine: true,
+          appendToBody: false,
+          backgroundColor: 'rgba(7, 15, 27, 0.96)',
+          borderColor: 'rgba(144, 174, 213, 0.32)',
+          borderWidth: 1,
+          padding: [13, 15],
+          textStyle: {
+            color: '#dce7f5',
+            fontFamily: 'Inter, PingFang SC, Microsoft YaHei, sans-serif',
+            fontSize: 13
+          },
+          extraCssText: 'border-radius:9px;box-shadow:0 16px 40px rgba(0,0,0,.28);',
+          formatter: function (params) {
+            if (params.dataType === 'edge') {
+              return '<div style="min-width:210px">' +
+                '<div style="color:#8ea2bd;font-size:11px;letter-spacing:.08em;margin-bottom:7px">阶段保留流</div>' +
+                '<div style="font-weight:700;color:#f3f7fd;margin-bottom:9px">' + params.data.source + ' &nbsp;→&nbsp; ' + params.data.target + '</div>' +
+                '<div><span style="color:#8ea2bd">进入下一阶段</span><span style="float:right;font-weight:700;color:#fff">' + formatter.format(params.value) + '</span></div>' +
+                '<div style="margin-top:5px"><span style="color:#8ea2bd">上一步转化率</span><span style="float:right;color:#8de6c8">' + params.data.stepRate + '</span></div>' +
+                '</div>';
+            }
+            var data = params.data;
+            return '<div style="min-width:220px">' +
+              '<div style="color:' + data.color + ';font-size:11px;font-weight:700;letter-spacing:.1em;margin-bottom:7px">STAGE ' + String(data.depth + 1).padStart(2, '0') + '</div>' +
+              '<div style="font-weight:700;color:#f3f7fd;max-width:300px;line-height:1.45">' + data.name + '</div>' +
+              '<div style="font-size:22px;font-weight:750;color:#fff;margin:8px 0 7px">' + formatter.format(data.value) + '</div>' +
+              '<div><span style="color:#8ea2bd">占初始总体</span><span style="float:right;color:#dce7f5">' + data.overall + '</span></div>' +
+              (data.depth === 0 ? '' : '<div style="margin-top:5px"><span style="color:#8ea2bd">上一步转化率</span><span style="float:right;color:#8de6c8">' + data.step + '</span></div>') +
+              '</div>';
+          }
+        },
+        series: [{
+          type: 'sankey',
+          name: 'ScienceAccelBench Funnel',
+          left: 22,
+          right: 22,
+          top: 44,
+          bottom: 18,
+          orient: 'horizontal',
+          nodeAlign: 'justify',
+          nodeWidth: 17,
+          nodeGap: 64,
+          layoutIterations: 72,
+          draggable: false,
+          data: stages.map(function (stage) {
+            return {
+              name: stage.name,
+              value: stage.value,
+              depth: stage.depth,
+              color: stage.color,
+              overall: stage.overall,
+              step: stage.step,
+              itemStyle: {
+                color: stage.color,
+                borderColor: 'rgba(235, 246, 255, 0.72)',
+                borderWidth: 1,
+                borderRadius: 3,
+                shadowBlur: 16,
+                shadowColor: stage.color + '42'
+              }
+            };
+          }),
+          links: links,
+          label: { show: false },
+          lineStyle: {
+            color: 'gradient',
+            opacity: 0.62,
+            curveness: 0.56
+          },
+          emphasis: {
+            focus: 'adjacency',
+            itemStyle: {
+              borderColor: '#ffffff',
+              borderWidth: 1.5,
+              shadowBlur: 24
+            },
+            lineStyle: { opacity: 0.9 }
+          },
+          blur: {
+            itemStyle: { opacity: 0.36 },
+            lineStyle: { opacity: 0.16 }
+          }
+        }],
+        graphic: [
+          {
+            type: 'text',
+            right: 18,
+            top: 7,
+            silent: true,
+            style: {
+              text: '487,329  →  4,082   ·   END-TO-END  0.84%',
+              fill: '#637995',
+              font: '600 11px Inter, PingFang SC, sans-serif',
+              textAlign: 'right'
+            }
+          }
+        ]
+      };
+
+      chart.setOption(option);
+
+      var resizeTimer;
+      window.addEventListener('resize', function () {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function () { chart.resize(); }, 80);
+      });
+
+      window.__SCIENCEACCELBENCH_SANKEY_READY__ = true;
+
+      // retheme the canvas when the page theme flips (CSS can't reach into ECharts)
+      window.__sabSankeyTheme = function (light) {
+        var label = light ? '#0d1420' : '#dce7f5';
+        var meta  = light ? '#5a6a7d' : '#637995';
+        chart.setOption({
+          series: [{ label: { color: label } }],
+          graphic: [{ style: { fill: meta } }]
+        });
+      };
+      if (document.documentElement.getAttribute('data-theme') === 'solar-light') {
+        window.__sabSankeyTheme(true);
+      }
+    }());
+  </script>
+<script>
+(function(){
+  var root=document.documentElement, DARK='aurora-cosmic', LIGHT='solar-light';
+  var btn=document.getElementById('themeToggle');
+  var icon=document.getElementById('themeIcon'), label=document.getElementById('themeLabel');
+  var saved=null;
+  try{ saved=localStorage.getItem('sab-theme'); }catch(e){}
+  if(!saved && window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) saved=LIGHT;
+  if(saved) root.setAttribute('data-theme',saved);
+  function paint(){
+    var light=root.getAttribute('data-theme')===LIGHT;
+    icon.textContent=light?'☾':'☀';
+    label.textContent=light?'DARK':'LIGHT';
+    btn.setAttribute('aria-pressed',String(light));
+    if(window.__sabSankeyTheme) window.__sabSankeyTheme(light);
+  }
+  btn.addEventListener('click',function(){
+    var light=root.getAttribute('data-theme')===LIGHT;
+    var next=light?DARK:LIGHT;
+    root.setAttribute('data-theme',next);
+    try{ localStorage.setItem('sab-theme',next); }catch(e){}
+    paint();
+  });
+  paint();
+}());
+</script>
+</body> </html> 
