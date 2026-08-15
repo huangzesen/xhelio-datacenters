@@ -186,6 +186,20 @@
 .xcard .xt{font:750 14px/1.4 Inter,system-ui,sans-serif;color:var(--ink)}
 .xcard .xd{font-size:12.4px;line-height:1.6;color:var(--muted)}
 .xcard .xg{margin-top:.35rem;font:700 11.5px/1 Inter,system-ui,sans-serif;color:var(--mint)}
+</style><style id="sectionnav">
+nav[aria-label="Main navigation"] a[href^="./"]{position:relative}
+nav[aria-label="Main navigation"] a[href^="./"]::after{content:"";position:absolute;left:.8rem;right:.8rem;bottom:.34rem;height:1.5px;background:color-mix(in srgb,var(--mint) 55%,transparent);border-radius:2px}
+/* section tabs live in the main nav on this page */
+.navlinks{display:none}
+
+.navlinks{display:flex;gap:.28rem;flex-wrap:wrap;align-items:center;margin-left:.35rem}
+.navlinks a{text-decoration:none;font:700 11px/1 Inter,system-ui,sans-serif;letter-spacing:.1em;
+ padding:.55rem .8rem;border-radius:7px;color:var(--muted);text-transform:uppercase;
+ transition:color .16s,background .16s}
+.navlinks a:hover{color:var(--mint);background:color-mix(in srgb,var(--mint) 9%,transparent)}
+.navlinks a[aria-current]{color:var(--mint);background:color-mix(in srgb,var(--mint) 13%,transparent)}
+.navlinks .sep{width:1px;height:16px;background:var(--line-strong);margin:0 .3rem}
+@media(max-width:900px){.navlinks{display:none}}
 </style></head> <body> <a class="skip-link" href="#main"><span data-lang="en">Skip to content</span><span data-lang="zh">跳至正文</span></a> <div class="cosmos" aria-hidden="true"> <div class="aurora aurora-a"></div> <div class="aurora aurora-b"></div> <div class="stars stars-a"></div> <div class="stars stars-b"></div> </div> <div class="livebar" role="status">
  <span class="pulse" aria-hidden="true"></span>
  <span class="lbl"><span data-lang="en">Processing now</span><span data-lang="zh">处理中</span></span>
