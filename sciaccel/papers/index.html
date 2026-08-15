@@ -82,6 +82,19 @@ select{background:var(--panel);border:1px solid var(--line-2);color:var(--ink);b
 .pager span{color:var(--muted);font-size:12.5px}
 .empty{text-align:center;color:var(--muted);padding:3rem 1rem}
 mark{background:color-mix(in srgb,var(--mint) 30%,transparent);color:inherit;border-radius:2px;padding:0 1px}
+
+.livebar{display:flex;align-items:center;gap:.9rem;flex-wrap:wrap;padding:.7rem 1.5rem;
+ border-bottom:1px solid color-mix(in srgb,var(--orange) 34%,transparent);
+ background:linear-gradient(90deg,color-mix(in srgb,var(--orange) 13%,transparent),transparent 70%)}
+.livebar .pulse{width:8px;height:8px;border-radius:50%;background:var(--orange);flex:none}
+.livebar .lbl{font:800 10px/1 var(--sans);letter-spacing:.17em;text-transform:uppercase;
+ color:var(--orange);flex:none}
+.livebar .txt{font-size:12.7px;color:var(--ink);opacity:.95;flex:1;min-width:230px}
+.livebar .track{width:120px;height:5px;border-radius:99px;background:color-mix(in srgb,var(--ink) 16%,transparent);
+ overflow:hidden;flex:none}
+.livebar .track i{display:block;height:100%;width:65.7%;border-radius:99px;
+ background:linear-gradient(90deg,var(--orange),var(--mint))}
+.livebar .pct{font:800 12px/1 var(--sans);flex:none}
 @media(max-width:640px){.wrap{padding:1.25rem 1rem 3rem}}
 </style>
 </head>
@@ -95,6 +108,11 @@ mark{background:color-mix(in srgb,var(--mint) 30%,transparent);color:inherit;bor
   <button class="tbtn" id="themeToggle">☀ LIGHT</button>
 </header>
 
+<div class="livebar" role="status">
+  <span class="pulse"></span><span class="lbl">Processing now</span>
+  <span class="txt">Reading the full text of all <b>13,417</b> papers to produce the exact list of open-source scientific codes — estimated at <b>~4,000</b>. <b>8,813</b> done; entries below fill in as extraction lands.</span>
+  <span class="track"><i></i></span><span class="pct">65.7%</span>
+</div>
 <div class="wrap">
   <h1>Corpus browser</h1>
   <p class="sub">Every parallel-simulation paper in the benchmark corpus, with its arXiv entry, DOI where one exists, and the scientific code detected in its full text.</p>
