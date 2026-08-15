@@ -33,6 +33,11 @@ a{color:inherit}
   display:grid;place-items:center}
 .brand .dot i{width:7px;height:7px;border-radius:50%;background:var(--mint)}
 .brand small{display:block;font-weight:600;font-size:9.5px;letter-spacing:.18em;color:var(--muted)}
+.navlinks{display:flex;gap:.3rem;flex-wrap:wrap}
+.navlinks a{text-decoration:none;font:700 11px/1 var(--sans);letter-spacing:.1em;padding:.55rem .8rem;
+ border-radius:7px;color:var(--muted);text-transform:uppercase}
+.navlinks a:hover{color:var(--mint);background:color-mix(in srgb,var(--mint) 9%,transparent)}
+.navlinks a[aria-current]{color:var(--mint);background:color-mix(in srgb,var(--mint) 13%,transparent)}
 .spacer{flex:1}
 .tbtn{cursor:pointer;background:transparent;border:1px solid var(--line-2);color:var(--ink);
   border-radius:999px;padding:.42rem .85rem;font:600 11px/1 var(--sans);letter-spacing:.08em}
@@ -104,6 +109,7 @@ mark{background:color-mix(in srgb,var(--mint) 30%,transparent);color:inherit;bor
     <span class="dot"><i></i></span>
     <span>SCIENCEACCELBENCH<small>CORPUS BROWSER</small></span>
   </a>
+  <nav class="navlinks"><a href="../">Overview</a><a href="./" aria-current="page">Papers</a><a href="../codes/">Codes</a></nav>
   <div class="spacer"></div>
   <button class="tbtn" id="themeToggle">☀ LIGHT</button>
 </header>

@@ -170,6 +170,22 @@
 .sb-figs span{font:600 9.8px/1.3 Inter,system-ui,sans-serif;letter-spacing:.14em;
  text-transform:uppercase;color:var(--muted)}
 .sb-note{margin-top:1.15rem;font-size:11.8px;line-height:1.65;color:var(--muted);max-width:78ch}
+</style><style id="explore-cards">
+.explore{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;
+ margin-top:2.4rem}
+.xcard{display:grid;gap:.5rem;align-content:start;text-decoration:none;border-radius:15px;
+ padding:1.4rem 1.45rem;border:1px solid color-mix(in srgb,var(--mint) 26%,transparent);
+ background:linear-gradient(150deg,color-mix(in srgb,var(--mint) 9%,transparent),transparent 70%);
+ transition:border-color .18s,transform .18s,background .18s}
+.xcard:hover{border-color:var(--mint);transform:translateY(-2px);
+ background:linear-gradient(150deg,color-mix(in srgb,var(--mint) 15%,transparent),transparent 70%)}
+.xcard .xk{font:800 9.8px/1 Inter,system-ui,sans-serif;letter-spacing:.18em;text-transform:uppercase;
+ color:var(--mint)}
+.xcard .xn{font:800 clamp(1.6rem,3vw,2.15rem)/1 Inter,system-ui,sans-serif;color:var(--ink);
+ font-variant-numeric:tabular-nums}
+.xcard .xt{font:750 14px/1.4 Inter,system-ui,sans-serif;color:var(--ink)}
+.xcard .xd{font-size:12.4px;line-height:1.6;color:var(--muted)}
+.xcard .xg{margin-top:.35rem;font:700 11.5px/1 Inter,system-ui,sans-serif;color:var(--mint)}
 </style></head> <body> <a class="skip-link" href="#main"><span data-lang="en">Skip to content</span><span data-lang="zh">跳至正文</span></a> <div class="cosmos" aria-hidden="true"> <div class="aurora aurora-a"></div> <div class="aurora aurora-b"></div> <div class="stars stars-a"></div> <div class="stars stars-b"></div> </div> <div class="livebar" role="status">
  <span class="pulse" aria-hidden="true"></span>
  <span class="lbl"><span data-lang="en">Processing now</span><span data-lang="zh">处理中</span></span>
@@ -182,7 +198,7 @@
   <span class="pct">65.7%</span>
  </span>
  <a class="more" href="#sankey"><span data-lang="en">See method ↓</span><span data-lang="zh">查看方法 ↓</span></a>
-</div> <header class="topbar"> <a class="brand" href="#top" aria-label="ScienceAccelBench home"> <span class="brand-sigil"><i></i></span> <span><b>SCIENCE<span>ACCEL</span>BENCH</b><small>BENCHMARK</small></span> </a> <nav aria-label="Main navigation"> <a href="#sankey"><span>01</span><b data-lang="en">CORPUS</b><i class="lang-divider">/</i><b data-lang="zh">语料</b></a> <a href="./papers/"><span>02</span><b data-lang="en">PAPERS</b><i class="lang-divider">/</i><b data-lang="zh">论文</b></a> <a href="#atlas"><span>03</span><b data-lang="en">ATLAS</b><i class="lang-divider">/</i><b data-lang="zh">图谱</b></a> <a href="#sandbox"><span>04</span><b data-lang="en">SANDBOXES</b><i class="lang-divider">/</i><b data-lang="zh">沙箱</b></a> <a href="#translation"><span>05</span><b data-lang="en">TRANSLATE</b><i class="lang-divider">/</i><b data-lang="zh">迁移</b></a>  </nav> <div class="header-tools"> <div class="language-switch" role="group" aria-label="Language mode"> <button type="button" data-language-mode="en" class="is-active" aria-pressed="true">EN</button> <button type="button" data-language-mode="zh" aria-pressed="false">中文</button> </div> <button type="button" class="theme-switch" id="themeToggle" aria-label="Toggle light/dark theme"><span id="themeIcon">☀</span><span id="themeLabel">LIGHT</span></button> <div class="live-mark"><i></i><span>AURORA DARK</span><b>· 2026.08.15</b></div> </div> </header> <main id="main"> <section class="hero" id="top" aria-labelledby="hero-title"> <div class="hero-index" aria-hidden="true">SAB—H / 001</div> <div class="hero-copy"> <p class="eyebrow"><span data-lang="en">AI × SCIENTIFIC COMPUTING</span><span data-lang="zh">人工智能 × 科学计算</span></p> <h1 id="hero-title"> <span>ScienceAccelBench</span> <span class="title-orbit"><b>·</b> CPU→GPU</span> </h1> <p class="hero-subtitle" data-lang="en">
+</div> <header class="topbar"> <a class="brand" href="#top" aria-label="ScienceAccelBench home"> <span class="brand-sigil"><i></i></span> <span><b>SCIENCE<span>ACCEL</span>BENCH</b><small>BENCHMARK</small></span> </a> <nav aria-label="Main navigation"> <a href="#sankey"><span>01</span><b data-lang="en">CORPUS</b><i class="lang-divider">/</i><b data-lang="zh">语料</b></a> <a href="./papers/"><span>02</span><b data-lang="en">PAPERS</b><i class="lang-divider">/</i><b data-lang="zh">论文</b></a> <a href="./codes/"><span>03</span><b data-lang="en">CODES</b><i class="lang-divider">/</i><b data-lang="zh">代码</b></a> <a href="#atlas"><span>04</span><b data-lang="en">ATLAS</b><i class="lang-divider">/</i><b data-lang="zh">图谱</b></a> <a href="#sandbox"><span>05</span><b data-lang="en">SANDBOXES</b><i class="lang-divider">/</i><b data-lang="zh">沙箱</b></a> <a href="#translation"><span>06</span><b data-lang="en">TRANSLATE</b><i class="lang-divider">/</i><b data-lang="zh">迁移</b></a>  </nav> <div class="header-tools"> <div class="language-switch" role="group" aria-label="Language mode"> <button type="button" data-language-mode="en" class="is-active" aria-pressed="true">EN</button> <button type="button" data-language-mode="zh" aria-pressed="false">中文</button> </div> <button type="button" class="theme-switch" id="themeToggle" aria-label="Toggle light/dark theme"><span id="themeIcon">☀</span><span id="themeLabel">LIGHT</span></button> <div class="live-mark"><i></i><span>AURORA DARK</span><b>· 2026.08.15</b></div> </div> </header> <main id="main"> <section class="hero" id="top" aria-labelledby="hero-title"> <div class="hero-index" aria-hidden="true">SAB—H / 001</div> <div class="hero-copy"> <p class="eyebrow"><span data-lang="en">AI × SCIENTIFIC COMPUTING</span><span data-lang="zh">人工智能 × 科学计算</span></p> <h1 id="hero-title"> <span>ScienceAccelBench</span> <span class="title-orbit"><b>·</b> CPU→GPU</span> </h1> <p class="hero-subtitle" data-lang="en">
 A benchmark for AI <strong>CPU → GPU</strong> code translation,<br>
 can it port trusted scientific code to the GPU without changing the answer?
 </p> <p class="hero-subtitle zh" data-lang="zh">面向高性能科学计算的 AI 代码加速基准<br>AI 能否将可信的科学代码迁移至 GPU，而不改变其结果？</p> <div class="hero-actions"> <a class="primary-action" href="#sankey"><span data-lang="en">Explore the corpus</span><small data-lang="zh">探索语料</small><i>↘</i></a> <a class="primary-action" href="./papers/" style="background:transparent;border:1px solid rgba(120,247,212,.45);color:#78f7d4"><span data-lang="en">Browse 13,417 papers</span><small data-lang="zh">浏览 13,417 篇论文</small><i>↗</i></a> <div class="manifest"><span><span data-lang="en">MANIFEST</span><span data-lang="zh">清单</span></span><strong>~4,000</strong><small><span data-lang="en">OPEN-SOURCE CODES · ESTIMATE</span><span data-lang="zh">开源代码 · 推算中</span></small></div> </div> </div> <div class="solar-field" aria-hidden="true"> <div class="solar-coordinates"><span>+90°</span><span>0°</span><span>−90°</span></div> <div class="orbit orbit-outer"><i></i></div> <div class="orbit orbit-mid"></div> <div class="orbit orbit-inner"></div> <div class="sun-core"> <span>CPU</span> <b>→</b> <span>GPU</span> <small>ACCELERATION<br>VECTOR</small> </div> <div class="orbital-label label-a">PARALLEL VALUE</div> <div class="orbital-label label-b">SOLAR / HPC</div> </div> <div class="hero-ticker" aria-label="Key corpus facts"> <div><span>487,329</span><small><b data-lang="en">PAPERS JUDGED</b><b data-lang="zh">已评估论文</b></small></div> <i></i> <div><span>86,476</span><small><b data-lang="en">SIMULATION PAPERS</b><b data-lang="zh">模拟论文</b></small></div> <i></i> <div><span>6,980</span><small><b data-lang="en">UNIQUE REPOSITORIES</b><b data-lang="zh">独立代码仓库</b></small></div> <i></i> <div class="accent"><span>10,000+</span><small><b data-lang="en">TARGET TRAINING SANDBOXES</b><b data-lang="zh">目标训练沙箱</b></small></div> </div> </section> <section class="sankey-section section-wrap" id="sankey" aria-labelledby="sankey-title">
@@ -203,7 +219,22 @@ can it port trusted scientific code to the GPU without changing the answer?
    <span data-lang="zh">流宽经压缩以便阅读；所示数字均为真实数量。</span>
    <span><a href="./papers/" style="color:var(--mint);text-decoration:none;font-weight:700;border-bottom:1px solid currentColor"><span data-lang="en">Browse all 13,417 papers →</span><span data-lang="zh">浏览全部 13,417 篇论文 →</span></a></span>
   </div>
- </div><div class="estimate">
+ </div> <div class="explore">
+  <a class="xcard" href="./papers/">
+   <span class="xk"><span data-lang="en">Browse</span><span data-lang="zh">浏览</span></span>
+   <span class="xn">13,417</span>
+   <span class="xt"><span data-lang="en">Papers in the corpus</span><span data-lang="zh">语料中的论文</span></span>
+   <span class="xd"><span data-lang="en">Every parallel-simulation paper with its arXiv entry, DOI, and the code detected in its full text. Searchable by title, author, ID or code name.</span><span data-lang="zh">每篇并行模拟论文及其 arXiv 条目、DOI 与全文中识别到的代码。可按标题、作者、ID 或代码名检索。</span></span>
+   <span class="xg"><span data-lang="en">Open the paper browser →</span><span data-lang="zh">打开论文浏览器 →</span></span>
+  </a>
+  <a class="xcard" href="./codes/">
+   <span class="xk"><span data-lang="en">Browse</span><span data-lang="zh">浏览</span></span>
+   <span class="xn">2,220</span>
+   <span class="xt"><span data-lang="en">Scientific codes found</span><span data-lang="zh">已发现的科学代码</span></span>
+   <span class="xd"><span data-lang="en">Distinct codes used by two or more papers, name variants merged. 551 resolve to a real repository; the rest are named but not yet connected.</span><span data-lang="zh">被两篇以上论文使用的独立代码，已合并命名变体。551 个可解析到真实仓库，其余仅有名称尚未连接。</span></span>
+   <span class="xg"><span data-lang="en">Open the code registry →</span><span data-lang="zh">打开代码注册表 →</span></span>
+  </a>
+ </div> <div class="estimate">
   <div class="eh"><i></i><span data-lang="en">Projection &#183; extraction in progress</span><span data-lang="zh">推算值 &#183; 抽取进行中</span></div>
   <p data-lang="en"><b>The 4,082 figure is a projection, not a completed census.</b> Reading a paper's full text and identifying the code it actually runs costs roughly <b>2M tokens per paper</b> &#8212; about <b>28B tokens</b> to process all 13,417. Extraction has finished on <b>8,813 papers</b> so far; the remainder is still running, and the final count will move as it lands.</p>
   <p class="zh" data-lang="zh"><b>4,082 为推算值，而非已完成的全量统计。</b> 读完单篇全文并识别其真实运行的代码，约需 <b>200 万 tokens</b>；13,417 篇合计约 <b>280 亿 tokens</b>。目前已完成 <b>8,813 篇</b>，其余仍在处理中，最终数字会随之变化。</p>

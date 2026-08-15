@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="aurora-cosmic">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="ScienceAccelBench code registry — the scientific codes found across the corpus, and how many are resolved to a real repository.">
+<title>Code Registry — ScienceAccelBench</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2305070d'/%3E%3Ccircle cx='32' cy='32' r='20' fill='none' stroke='%2378f7d4' stroke-width='2'/%3E%3Cpath d='M7 32h50M32 7v50' stroke='%2378f7d4' opacity='.45'/%3E%3Ccircle cx='32' cy='32' r='7' fill='%2378f7d4'/%3E%3C/svg%3E">
+<style>
+:root{
+  --bg:#05070d; --panel:#0b1018; --panel-2:#0e141e; --ink:#eef3f8; --muted:#8fa0b4;
+  --line:rgba(212,235,230,.13); --line-2:rgba(212,235,230,.26);
+  --mint:#78f7d4; --blue:#7cc8ff; --violet:#a9a6ff; --orange:#ffbc76; --red:#ff8a8a;
+  --sans:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",Arial,sans-serif;
+  color-scheme:dark;
+}
+:root[data-theme="solar-light"]{
+  --bg:#f5f7fa; --panel:#fff; --panel-2:#eef2f7; --ink:#0d1420; --muted:#5a6a7d;
+  --line:rgba(13,20,32,.13); --line-2:rgba(13,20,32,.26);
+  --mint:#0e9e7c; --blue:#2b7fd4; --violet:#6b62d6; --orange:#c9761a; --red:#c0392b;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 15px/1.6 var(--sans);
+     -webkit-font-smoothing:antialiased}
+a{color:inherit}
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:1rem;flex-wrap:wrap;
+  padding:.85rem 1.5rem;background:color-mix(in srgb,var(--bg) 88%,transparent);
+  backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:.6rem;text-decoration:none;font-weight:800;font-size:14px}
+.brand .dot{width:22px;height:22px;border-radius:6px;border:1.5px solid var(--mint);
+  display:grid;place-items:center}
+.brand .dot i{width:7px;height:7px;border-radius:50%;background:var(--mint)}
+.brand small{display:block;font-weight:600;font-size:9.5px;letter-spacing:.18em;color:var(--muted)}
+.navlinks{display:flex;gap:.3rem;flex-wrap:wrap}
+.navlinks a{text-decoration:none;font:700 11px/1 var(--sans);letter-spacing:.1em;
+  padding:.55rem .8rem;border-radius:7px;color:var(--muted);text-transform:uppercase}
+.navlinks a:hover{color:var(--mint);background:color-mix(in srgb,var(--mint) 9%,transparent)}
+.navlinks a[aria-current]{color:var(--mint);background:color-mix(in srgb,var(--mint) 13%,transparent)}
+.spacer{flex:1}
+.tbtn{cursor:pointer;background:transparent;border:1px solid var(--line-2);color:var(--ink);
+  border-radius:999px;padding:.42rem .85rem;font:600 11px/1 var(--sans);letter-spacing:.08em}
+.tbtn:hover{border-color:var(--mint)}
+.wrap{max-width:1180px;margin:0 auto;padding:1.75rem 1.5rem 4rem}
+h1{font-size:clamp(1.5rem,3vw,2.1rem);margin:.2rem 0 .35rem;letter-spacing:-.02em}
+.sub{color:var(--muted);font-size:14px;margin:0 0 1.3rem;max-width:78ch}
+.gapbox{border:1px solid color-mix(in srgb,var(--orange) 40%,transparent);border-radius:13px;
+  background:color-mix(in srgb,var(--orange) 8%,transparent);padding:1.05rem 1.15rem;margin-bottom:1.4rem}
+.gapbox .gh{font:800 10px/1 var(--sans);letter-spacing:.17em;text-transform:uppercase;
+  color:var(--orange);margin-bottom:.5rem}
+.gapbox p{margin:0;font-size:13.4px;line-height:1.72}
+.gapbox .bars{display:flex;gap:1.4rem;flex-wrap:wrap;margin-top:.9rem;padding-top:.8rem;
+  border-top:1px solid color-mix(in srgb,var(--orange) 25%,transparent)}
+.gapbox .bars div{display:grid;gap:.18rem}
+.gapbox .bars b{font:800 17px/1 var(--sans)}
+.gapbox .bars b.ok{color:var(--mint)} .gapbox .bars b.no{color:var(--orange)}
+.gapbox .bars span{font:600 9.6px/1.3 var(--sans);letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
+.searchrow{display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:.7rem}
+#q{flex:1;min-width:240px;background:var(--panel);border:1px solid var(--line-2);color:var(--ink);
+  border-radius:10px;padding:.78rem 1rem;font:400 14px var(--sans)}
+#q:focus{outline:none;border-color:var(--mint)}
+select{background:var(--panel);border:1px solid var(--line-2);color:var(--ink);border-radius:10px;
+  padding:.78rem .8rem;font:500 13px var(--sans);cursor:pointer}
+.chips{display:flex;gap:.45rem;flex-wrap:wrap;margin-bottom:1rem}
+.chip{cursor:pointer;border:1px solid var(--line-2);background:transparent;color:var(--muted);
+  border-radius:999px;padding:.4rem .8rem;font:600 11.5px/1 var(--sans)}
+.chip[aria-pressed="true"]{background:var(--mint);border-color:var(--mint);color:#04150f}
+.meta{color:var(--muted);font-size:12.5px;margin:0 0 .9rem}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+thead th{text-align:left;font:700 10px/1 var(--sans);letter-spacing:.13em;text-transform:uppercase;
+  color:var(--muted);padding:.6rem .7rem;border-bottom:1px solid var(--line-2);white-space:nowrap}
+tbody td{padding:.72rem .7rem;border-bottom:1px solid var(--line);vertical-align:top}
+tbody tr:hover{background:color-mix(in srgb,var(--mint) 5%,transparent)}
+.nm{font-weight:650}
+.nm a{color:var(--blue);text-decoration:none}
+.nm a:hover{text-decoration:underline}
+.badge{display:inline-block;font:700 9.5px/1 var(--sans);letter-spacing:.07em;padding:.3rem .48rem;
+  border-radius:4px;border:1px solid var(--line-2);color:var(--muted);text-transform:uppercase}
+.badge.res{color:var(--mint);border-color:color-mix(in srgb,var(--mint) 50%,transparent)}
+.badge.unres{color:var(--orange);border-color:color-mix(in srgb,var(--orange) 45%,transparent)}
+.badge.k{color:var(--violet);border-color:color-mix(in srgb,var(--violet) 42%,transparent)}
+.num{font-variant-numeric:tabular-nums;font-weight:700}
+.host{color:var(--muted);font-size:11.5px}
+.pager{display:flex;gap:.5rem;justify-content:center;align-items:center;margin-top:1.5rem;flex-wrap:wrap}
+.pager button{cursor:pointer;background:var(--panel);border:1px solid var(--line-2);color:var(--ink);
+  border-radius:8px;padding:.55rem .9rem;font:600 12.5px var(--sans)}
+.pager button:disabled{opacity:.35;cursor:not-allowed}
+.pager span{color:var(--muted);font-size:12.5px}
+.empty{text-align:center;color:var(--muted);padding:3rem 1rem}
+mark{background:color-mix(in srgb,var(--mint) 30%,transparent);color:inherit;border-radius:2px}
+@media(max-width:760px){.hide-sm{display:none}.wrap{padding:1.25rem 1rem 3rem}}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="../"><span class="dot"><i></i></span>
+    <span>SCIENCEACCELBENCH<small>CODE REGISTRY</small></span></a>
+  <nav class="navlinks">
+    <a href="../">Overview</a>
+    <a href="../papers/">Papers</a>
+    <a href="./" aria-current="page">Codes</a>
+  </nav>
+  <div class="spacer"></div>
+  <button class="tbtn" id="themeToggle">☀ LIGHT</button>
+</header>
+
+<div class="wrap">
+  <h1>Code registry</h1>
+  <p class="sub">Every distinct scientific code the corpus found being <em>used</em> by two or more papers, after merging naming variants (LAMMPS / LAMMPS module / lammp are one entry). Ranked by how many papers run it.</p>
+
+  <div class="gapbox">
+    <div class="gh">Found, but mostly not connected yet</div>
+    <p>These codes were identified by reading paper full text, so a name is only as linked as the paper made it. <b>550 of 2,220</b> resolve to a real code host — GitHub, GitLab, Bitbucket, SourceForge. The rest name a code that certainly exists, but the paper printed no repository, only a homepage, a citation, or nothing at all. Resolving those is a separate pass that has not run: it needs a registry lookup (Software Heritage, ASCL, OpenAlex) per name, not more reading.</p>
+    <div class="bars">
+      <div><b class="ok">550</b><span>resolved to a code host</span></div>
+      <div><b>1,334</b><span>have some link</span></div>
+      <div><b class="no">886</b><span>no link at all</span></div>
+      <div><b>2,220</b><span>codes used by 2+ papers</span></div>
+    </div>
+  </div>
+
+  <div class="searchrow">
+    <input id="q" type="search" placeholder="Search a code name — LAMMPS, PETSc, GROMACS…" autocomplete="off">
+    <select id="sort">
+      <option value="papers">Most used</option>
+      <option value="name">Name A–Z</option>
+      <option value="variants">Most name variants</option>
+    </select>
+    <select id="kind">
+      <option value="">All kinds</option>
+      <option value="application">Application</option>
+      <option value="library">Library</option>
+      <option value="commercial">Commercial</option>
+      <option value="language_or_platform">Language / platform</option>
+      <option value="ambiguous">Unclassified</option>
+    </select>
+  </div>
+  <div class="chips">
+    <button class="chip" id="f-res"   aria-pressed="false">Resolved to a repo</button>
+    <button class="chip" id="f-unres" aria-pressed="false">Not connected yet</button>
+    <button class="chip" id="f-os"    aria-pressed="false">Open source</button>
+  </div>
+
+  <p class="meta" id="count">Loading…</p>
+  <table>
+    <thead><tr>
+      <th>Code</th><th>Papers</th><th class="hide-sm">Kind</th>
+      <th class="hide-sm">Licence</th><th>Repository</th>
+    </tr></thead>
+    <tbody id="rows"></tbody>
+  </table>
+  <div class="pager" id="pager"></div>
+</div>
+
+<script>
+(function(){
+  var root=document.documentElement,L='solar-light',D='aurora-cosmic',b=document.getElementById('themeToggle');
+  var s=null; try{s=localStorage.getItem('sab-theme');}catch(e){}
+  if(!s && matchMedia('(prefers-color-scheme: light)').matches) s=L;
+  if(s) root.setAttribute('data-theme',s);
+  function p(){ b.textContent = root.getAttribute('data-theme')===L ? '☾ DARK':'☀ LIGHT'; }
+  b.onclick=function(){var l=root.getAttribute('data-theme')===L,n=l?D:L;
+    root.setAttribute('data-theme',n); try{localStorage.setItem('sab-theme',n);}catch(e){} p();};
+  p();
+})();
+
+(function(){
+  var PER=50, all=[], view=[], page=0;
+  var $=function(i){return document.getElementById(i);};
+  var q=$('q'), sortSel=$('sort'), kindSel=$('kind'), rows=$('rows'),
+      countEl=$('count'), pager=$('pager');
+  var fRes=$('f-res'), fUn=$('f-unres'), fOs=$('f-os');
+  function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+  function hl(s,t){ if(!t) return esc(s);
+    var i=String(s).toLowerCase().indexOf(t); if(i<0) return esc(s);
+    return esc(String(s).slice(0,i))+'<mark>'+esc(String(s).slice(i,i+t.length))+'</mark>'+esc(String(s).slice(i+t.length));}
+
+  function apply(){
+    var t=q.value.trim().toLowerCase(), k=kindSel.value;
+    var wantRes=fRes.getAttribute('aria-pressed')==='true';
+    var wantUn=fUn.getAttribute('aria-pressed')==='true';
+    var wantOs=fOs.getAttribute('aria-pressed')==='true';
+    view=all.filter(function(c){
+      if(wantRes && !c.code) return false;
+      if(wantUn && c.code) return false;
+      if(wantOs && c.os!=='yes') return false;
+      if(k && c.k!==k) return false;
+      if(t && c.n.toLowerCase().indexOf(t)<0 && (!c.h||c.h.indexOf(t)<0)) return false;
+      return true;
+    });
+    var s=sortSel.value;
+    view.sort(function(a,b){
+      if(s==='papers') return b.p-a.p || a.n.localeCompare(b.n);
+      if(s==='variants') return b.v-a.v || b.p-a.p;
+      return a.n.localeCompare(b.n);
+    });
+    page=0; render();
+  }
+
+  function render(){
+    var t=q.value.trim().toLowerCase();
+    countEl.textContent=view.length.toLocaleString()+' of '+all.length.toLocaleString()+' codes';
+    if(!view.length){rows.innerHTML='<tr><td colspan="5"><div class="empty">No codes match.</div></td></tr>';
+      pager.innerHTML=''; return;}
+    var st=page*PER;
+    rows.innerHTML=view.slice(st,st+PER).map(function(c){
+      var name = c.u ? '<a href="'+esc(c.u)+'" target="_blank" rel="noopener">'+hl(c.n,t)+' ↗</a>' : hl(c.n,t);
+      var kind = c.k==='ambiguous' ? '<span class="badge">unclassified</span>'
+                                   : '<span class="badge k">'+esc(c.k.replace(/_/g,' '))+'</span>';
+      var lic  = c.os==='yes' ? '<span class="badge res">open source</span>'
+               : c.os==='no'  ? '<span class="badge">proprietary</span>'
+                              : '<span class="badge">unknown</span>';
+      var repo = c.code
+        ? '<span class="badge res">resolved</span> <span class="host">'+esc(c.r||c.h||'')+'</span>'
+        : '<span class="badge unres">not connected</span>'+(c.h?' <span class="host">'+esc(c.h)+'</span>':'');
+      return '<tr><td class="nm">'+name+(c.v>1?' <span class="host">'+c.v+' name variants</span>':'')+'</td>'
+        +'<td class="num">'+c.p.toLocaleString()+'</td>'
+        +'<td class="hide-sm">'+kind+'</td><td class="hide-sm">'+lic+'</td><td>'+repo+'</td></tr>';
+    }).join('');
+    var pages=Math.ceil(view.length/PER);
+    pager.innerHTML='<button id="pp"'+(page===0?' disabled':'')+'>← Prev</button>'
+      +'<span>Page '+(page+1)+' of '+pages.toLocaleString()+'</span>'
+      +'<button id="pn"'+(page>=pages-1?' disabled':'')+'>Next →</button>';
+    var pp=$('pp'),pn=$('pn');
+    if(pp)pp.onclick=function(){if(page>0){page--;render();scrollTo({top:0,behavior:'smooth'});}};
+    if(pn)pn.onclick=function(){if(page<pages-1){page++;render();scrollTo({top:0,behavior:'smooth'});}};
+  }
+
+  var d; q.addEventListener('input',function(){clearTimeout(d);d=setTimeout(apply,130);});
+  sortSel.onchange=apply; kindSel.onchange=apply;
+  [fRes,fUn,fOs].forEach(function(b){b.onclick=function(){
+    b.setAttribute('aria-pressed',b.getAttribute('aria-pressed')==='true'?'false':'true');
+    if(b===fRes && fRes.getAttribute('aria-pressed')==='true') fUn.setAttribute('aria-pressed','false');
+    if(b===fUn && fUn.getAttribute('aria-pressed')==='true') fRes.setAttribute('aria-pressed','false');
+    apply();};});
+
+  fetch('../data/codes.json').then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.json();})
+  .then(function(j){ all=j; apply(); })
+  .catch(function(e){ rows.innerHTML='<tr><td colspan="5"><div class="empty">Could not load the registry ('
+    +esc(e.message)+').</div></td></tr>'; countEl.textContent=''; });
+})();
+</script>
+</body>
+</html>
