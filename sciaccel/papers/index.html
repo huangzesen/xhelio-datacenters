@@ -88,6 +88,22 @@ select{background:var(--panel);border:1px solid var(--line-2);color:var(--ink);b
 .pager button:disabled{opacity:.35;cursor:not-allowed}
 .pager span{color:var(--muted);font-size:12.5px}
 .empty{text-align:center;color:var(--muted);padding:3rem 1rem}
+
+.pagetabs{position:relative;z-index:41;display:flex;align-items:stretch;
+ padding:0 1.5rem;border-bottom:1px solid var(--line);
+ background:color-mix(in srgb,var(--bg) 92%,transparent)}
+.pagetabs a{display:flex;align-items:center;gap:.5rem;text-decoration:none;
+ padding:.72rem 1.15rem;font:700 10.5px/1 var(--sans);letter-spacing:.15em;
+ text-transform:uppercase;color:var(--muted);border-bottom:2px solid transparent;
+ transition:color .16s,border-color .16s,background .16s}
+.pagetabs a i{font-style:normal;font-weight:800;opacity:.55}
+.pagetabs a:hover{color:var(--mint);background:color-mix(in srgb,var(--mint) 8%,transparent)}
+.pagetabs a[aria-current]{color:var(--mint);border-bottom-color:var(--mint);
+ background:color-mix(in srgb,var(--mint) 10%,transparent)}
+.pagetabs a[aria-current] i{opacity:1}
+.pagetabs .grow{flex:1}
+@media(max-width:700px){.pagetabs{padding:0 14px}.pagetabs a{padding:.65rem .8rem;letter-spacing:.1em}}
+
 mark{background:color-mix(in srgb,var(--mint) 30%,transparent);color:inherit;border-radius:2px;padding:0 1px}
 
 .livebar{display:flex;align-items:center;gap:.9rem;flex-wrap:wrap;padding:.7rem 1.5rem;
@@ -111,14 +127,16 @@ mark{background:color-mix(in srgb,var(--mint) 30%,transparent);color:inherit;bor
     <span class="dot"><i></i></span>
     <span>SCIENCEACCELBENCH<small>CORPUS BROWSER</small></span>
   </a>
-  <nav class="navlinks">
-    <a href="../"><span>01</span>Overview</a>
-    <a href="../papers/" aria-current="page"><span>02</span>Papers</a>
-    <a href="../codes/"><span>03</span>Codes</a>
-  </nav>
   <div class="spacer"></div>
   <button class="tbtn" id="themeToggle">☀ LIGHT</button>
 </header>
+<div class="pagetabs" role="navigation" aria-label="Site sections">
+ <a href="../"><i>01</i><span>Overview</span></a>
+ <a href="../papers/" aria-current="page"><i>02</i><span>Papers</span><span style="opacity:.6;letter-spacing:0">13,417</span></a>
+ <a href="../codes/"><i>03</i><span>Codes</span><span style="opacity:.6;letter-spacing:0">2,220</span></a>
+ <span class="grow"></span>
+</div>
+
 
 <div class="livebar" role="status">
   <span class="pulse"></span><span class="lbl">Processing now</span>
