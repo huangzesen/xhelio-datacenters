@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="aurora-cosmic">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="ScienceAccelBench corpus browser — 13,417 parallel-simulation papers with arXiv links, DOIs and detected code repositories.">
+<title>Corpus Browser — ScienceAccelBench</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2305070d'/%3E%3Ccircle cx='32' cy='32' r='20' fill='none' stroke='%2378f7d4' stroke-width='2'/%3E%3Cpath d='M7 32h50M32 7v50' stroke='%2378f7d4' opacity='.45'/%3E%3Ccircle cx='32' cy='32' r='7' fill='%2378f7d4'/%3E%3C/svg%3E">
+<style>
+:root{
+  --bg:#05070d; --panel:#0b1018; --panel-2:#0e141e; --ink:#eef3f8; --muted:#8fa0b4;
+  --line:rgba(212,235,230,.13); --line-2:rgba(212,235,230,.26);
+  --mint:#78f7d4; --blue:#7cc8ff; --violet:#a9a6ff; --orange:#ffbc76;
+  --sans:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",Arial,sans-serif;
+  color-scheme:dark;
+}
+:root[data-theme="solar-light"]{
+  --bg:#f5f7fa; --panel:#fff; --panel-2:#eef2f7; --ink:#0d1420; --muted:#5a6a7d;
+  --line:rgba(13,20,32,.13); --line-2:rgba(13,20,32,.26);
+  --mint:#0e9e7c; --blue:#2b7fd4; --violet:#6b62d6; --orange:#c9761a;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 15px/1.6 var(--sans);
+     -webkit-font-smoothing:antialiased}
+a{color:inherit}
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:1rem;flex-wrap:wrap;
+  padding:.85rem 1.5rem;background:color-mix(in srgb,var(--bg) 88%,transparent);
+  backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:.6rem;text-decoration:none;font-weight:800;
+  letter-spacing:.02em;font-size:14px}
+.brand .dot{width:22px;height:22px;border-radius:6px;border:1.5px solid var(--mint);
+  display:grid;place-items:center}
+.brand .dot i{width:7px;height:7px;border-radius:50%;background:var(--mint)}
+.brand small{display:block;font-weight:600;font-size:9.5px;letter-spacing:.18em;color:var(--muted)}
+.spacer{flex:1}
+.tbtn{cursor:pointer;background:transparent;border:1px solid var(--line-2);color:var(--ink);
+  border-radius:999px;padding:.42rem .85rem;font:600 11px/1 var(--sans);letter-spacing:.08em}
+.tbtn:hover{border-color:var(--mint)}
+.wrap{max-width:1180px;margin:0 auto;padding:1.75rem 1.5rem 4rem}
+h1{font-size:clamp(1.5rem,3vw,2.1rem);margin:.2rem 0 .35rem;letter-spacing:-.02em}
+.sub{color:var(--muted);font-size:14px;margin:0 0 1.4rem}
+.controls{display:grid;grid-template-columns:1fr;gap:.7rem;margin-bottom:1.1rem}
+.searchrow{display:flex;gap:.6rem;flex-wrap:wrap}
+#q{flex:1;min-width:240px;background:var(--panel);border:1px solid var(--line-2);color:var(--ink);
+  border-radius:10px;padding:.78rem 1rem;font:400 14px var(--sans)}
+#q:focus{outline:none;border-color:var(--mint)}
+select{background:var(--panel);border:1px solid var(--line-2);color:var(--ink);border-radius:10px;
+  padding:.78rem .8rem;font:500 13px var(--sans);cursor:pointer}
+.chips{display:flex;gap:.45rem;flex-wrap:wrap}
+.chip{cursor:pointer;border:1px solid var(--line-2);background:transparent;color:var(--muted);
+  border-radius:999px;padding:.4rem .8rem;font:600 11.5px/1 var(--sans);letter-spacing:.04em}
+.chip[aria-pressed="true"]{background:var(--mint);border-color:var(--mint);color:#04150f}
+.meta{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;
+  color:var(--muted);font-size:12.5px;margin:.2rem 0 1rem;letter-spacing:.03em}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:1.05rem 1.15rem;
+  margin-bottom:.7rem}
+.card h2{font-size:15.5px;line-height:1.45;margin:0 0 .5rem;font-weight:650}
+.card h2 a{text-decoration:none}
+.card h2 a:hover{color:var(--mint)}
+.authors{color:var(--muted);font-size:12.5px;margin:0 0 .6rem}
+.tags{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;margin-bottom:.5rem}
+.tag{font:600 10.5px/1 var(--sans);letter-spacing:.06em;padding:.32rem .6rem;border-radius:5px;
+  border:1px solid var(--line-2);color:var(--muted);text-transform:uppercase}
+.tag.cat{color:var(--blue);border-color:color-mix(in srgb,var(--blue) 45%,transparent)}
+.tag.os{color:var(--mint);border-color:color-mix(in srgb,var(--mint) 50%,transparent)}
+.links{display:flex;gap:.45rem;flex-wrap:wrap;margin-top:.15rem}
+.links a{font:600 11.5px/1 var(--sans);text-decoration:none;padding:.42rem .7rem;border-radius:6px;
+  border:1px solid var(--line-2);color:var(--ink);letter-spacing:.04em}
+.links a:hover{border-color:var(--mint);color:var(--mint)}
+.repos{margin-top:.7rem;padding-top:.65rem;border-top:1px dashed var(--line)}
+.repos b{font-size:10.5px;letter-spacing:.14em;color:var(--muted);text-transform:uppercase;
+  display:block;margin-bottom:.4rem;font-weight:700}
+.repo{display:inline-flex;align-items:center;gap:.35rem;font-size:12px;margin:0 .5rem .3rem 0;
+  color:var(--ink)}
+.repo a{color:var(--blue)}
+.repo .r{color:var(--muted);font-size:10.5px}
+.pager{display:flex;gap:.5rem;justify-content:center;align-items:center;margin-top:1.6rem;flex-wrap:wrap}
+.pager button{cursor:pointer;background:var(--panel);border:1px solid var(--line-2);color:var(--ink);
+  border-radius:8px;padding:.55rem .9rem;font:600 12.5px var(--sans)}
+.pager button:disabled{opacity:.35;cursor:not-allowed}
+.pager span{color:var(--muted);font-size:12.5px}
+.empty{text-align:center;color:var(--muted);padding:3rem 1rem}
+mark{background:color-mix(in srgb,var(--mint) 30%,transparent);color:inherit;border-radius:2px;padding:0 1px}
+@media(max-width:640px){.wrap{padding:1.25rem 1rem 3rem}}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="../">
+    <span class="dot"><i></i></span>
+    <span>SCIENCEACCELBENCH<small>CORPUS BROWSER</small></span>
+  </a>
+  <div class="spacer"></div>
+  <button class="tbtn" id="themeToggle">☀ LIGHT</button>
+</header>
+
+<div class="wrap">
+  <h1>Corpus browser</h1>
+  <p class="sub">Every parallel-simulation paper in the benchmark corpus, with its arXiv entry, DOI where one exists, and the scientific code detected in its full text.</p>
+
+  <div class="controls">
+    <div class="searchrow">
+      <input id="q" type="search" placeholder="Search title, author, arXiv ID, DOI, or code name…" autocomplete="off">
+      <select id="sort">
+        <option value="new">Newest first</option>
+        <option value="old">Oldest first</option>
+        <option value="repos">Most code found</option>
+        <option value="title">Title A–Z</option>
+      </select>
+    </div>
+    <div class="chips">
+      <button class="chip" id="f-os"   aria-pressed="false">Open-source parallel sim</button>
+      <button class="chip" id="f-doi"  aria-pressed="false">Has DOI</button>
+      <button class="chip" id="f-repo" aria-pressed="false">Has code links</button>
+      <select id="cat"><option value="">All categories</option></select>
+    </div>
+  </div>
+
+  <div class="meta">
+    <span id="count">Loading…</span>
+    <span id="hint"></span>
+  </div>
+
+  <div id="list"></div>
+  <div class="pager" id="pager"></div>
+</div>
+
+<script>
+(function(){
+  var root=document.documentElement, LIGHT='solar-light', DARK='aurora-cosmic';
+  var tb=document.getElementById('themeToggle');
+  var saved=null; try{saved=localStorage.getItem('sab-theme');}catch(e){}
+  if(!saved && matchMedia('(prefers-color-scheme: light)').matches) saved=LIGHT;
+  if(saved) root.setAttribute('data-theme',saved);
+  function paint(){ var l=root.getAttribute('data-theme')===LIGHT;
+    tb.textContent = l ? '☾ DARK' : '☀ LIGHT'; }
+  tb.onclick=function(){ var l=root.getAttribute('data-theme')===LIGHT;
+    var n=l?DARK:LIGHT; root.setAttribute('data-theme',n);
+    try{localStorage.setItem('sab-theme',n);}catch(e){} paint(); };
+  paint();
+})();
+
+(function(){
+  var PER=25, all=[], view=[], page=0;
+  var $=function(id){return document.getElementById(id);};
+  var q=$('q'), sortSel=$('sort'), catSel=$('cat'), list=$('list'),
+      countEl=$('count'), hintEl=$('hint'), pager=$('pager');
+  var fOS=$('f-os'), fDOI=$('f-doi'), fREPO=$('f-repo');
+
+  function esc(s){ return String(s==null?'':s)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+  function hl(s,t){ if(!t) return esc(s);
+    var i=String(s).toLowerCase().indexOf(t); if(i<0) return esc(s);
+    return esc(String(s).slice(0,i))+'<mark>'+esc(String(s).slice(i,i+t.length))+'</mark>'
+         + esc(String(s).slice(i+t.length)); }
+
+  function blob(p){
+    if(p._b) return p._b;
+    p._b=(p.t+' '+p.a.join(' ')+' '+p.id+' '+(p.d||'')+' '+(p.j||'')+' '+p.c+' '
+        + p.repos.map(function(r){return r.n;}).join(' ')).toLowerCase();
+    return p._b;
+  }
+
+  function apply(){
+    var t=q.value.trim().toLowerCase();
+    var needOS=fOS.getAttribute('aria-pressed')==='true';
+    var needDOI=fDOI.getAttribute('aria-pressed')==='true';
+    var needRepo=fREPO.getAttribute('aria-pressed')==='true';
+    var cat=catSel.value;
+    view=all.filter(function(p){
+      if(needOS && !p.os) return false;
+      if(needDOI && !p.d) return false;
+      if(needRepo && !p.repos.length) return false;
+      if(cat && p.c!==cat) return false;
+      if(t && blob(p).indexOf(t)<0) return false;
+      return true;
+    });
+    var s=sortSel.value;
+    view.sort(function(a,b){
+      if(s==='new')  return (b.y||'').localeCompare(a.y||'');
+      if(s==='old')  return (a.y||'').localeCompare(b.y||'');
+      if(s==='repos')return b.repos.length-a.repos.length || (b.y||'').localeCompare(a.y||'');
+      return a.t.localeCompare(b.t);
+    });
+    page=0; render();
+  }
+
+  function render(){
+    var t=q.value.trim().toLowerCase();
+    countEl.textContent = view.length.toLocaleString()+' of '+all.length.toLocaleString()+' papers';
+    if(!view.length){ list.innerHTML='<div class="empty">No papers match those filters.</div>';
+      pager.innerHTML=''; return; }
+    var start=page*PER, slice=view.slice(start,start+PER);
+    list.innerHTML=slice.map(function(p){
+      var au=p.a.map(function(n){return hl(n,t);}).join(', ')
+           + (p.na>p.a.length ? ' <span style="opacity:.7">+'+(p.na-p.a.length)+' more</span>' : '');
+      var tags='<span class="tag cat">'+esc(p.c)+'</span>'
+        + (p.y?'<span class="tag">'+esc(p.y.slice(0,4))+'</span>':'')
+        + (p.os?'<span class="tag os">Open-source parallel sim</span>':'')
+        + (p.repos.length?'<span class="tag">'+p.repos.length+' code found</span>':'');
+      var links='<a href="https://arxiv.org/abs/'+esc(p.id)+'" target="_blank" rel="noopener">arXiv '+esc(p.id)+' ↗</a>'
+        + '<a href="https://arxiv.org/pdf/'+esc(p.id)+'" target="_blank" rel="noopener">PDF ↗</a>'
+        + (p.d?'<a href="https://doi.org/'+esc(p.d)+'" target="_blank" rel="noopener">DOI ↗</a>':'')
+        + (p.j?'<span class="tag" style="text-transform:none">'+esc(p.j)+'</span>':'');
+      var repos='';
+      if(p.repos.length){
+        repos='<div class="repos"><b>Code detected in full text</b>'
+          + p.repos.map(function(r){
+              var nm=hl(r.n,t);
+              return '<span class="repo">'+(r.u?'<a href="'+esc(r.u)+'" target="_blank" rel="noopener">'+nm+' ↗</a>':nm)
+                   + (r.r?' <span class="r">'+esc(r.r.replace(/_/g,' '))+'</span>':'')+'</span>';
+            }).join('') + '</div>';
+      }
+      return '<article class="card"><h2><a href="https://arxiv.org/abs/'+esc(p.id)
+        +'" target="_blank" rel="noopener">'+hl(p.t,t)+'</a></h2>'
+        + '<p class="authors">'+au+'</p><div class="tags">'+tags+'</div>'
+        + '<div class="links">'+links+'</div>'+repos+'</article>';
+    }).join('');
+    var pages=Math.ceil(view.length/PER);
+    pager.innerHTML='<button id="pp" '+(page===0?'disabled':'')+'>← Prev</button>'
+      +'<span>Page '+(page+1)+' of '+pages.toLocaleString()+'</span>'
+      +'<button id="pn" '+(page>=pages-1?'disabled':'')+'>Next →</button>';
+    var pp=document.getElementById('pp'), pn=document.getElementById('pn');
+    if(pp) pp.onclick=function(){ if(page>0){page--; render(); scrollTo({top:0,behavior:'smooth'});} };
+    if(pn) pn.onclick=function(){ if(page<pages-1){page++; render(); scrollTo({top:0,behavior:'smooth'});} };
+  }
+
+  var deb; function onInput(){ clearTimeout(deb); deb=setTimeout(apply,140); }
+  q.addEventListener('input',onInput);
+  sortSel.onchange=apply; catSel.onchange=apply;
+  [fOS,fDOI,fREPO].forEach(function(b){
+    b.onclick=function(){ b.setAttribute('aria-pressed', b.getAttribute('aria-pressed')==='true'?'false':'true'); apply(); };
+  });
+
+  fetch('../data/papers.json').then(function(r){
+    if(!r.ok) throw new Error('HTTP '+r.status); return r.json();
+  }).then(function(d){
+    all=d;
+    var cats={}; d.forEach(function(p){ cats[p.c]=(cats[p.c]||0)+1; });
+    Object.keys(cats).sort(function(a,b){return cats[b]-cats[a];}).forEach(function(c){
+      var o=document.createElement('option'); o.value=c;
+      o.textContent=c+' ('+cats[c].toLocaleString()+')'; catSel.appendChild(o);
+    });
+    hintEl.textContent='Search matches titles, authors, IDs, DOIs and code names.';
+    apply();
+  }).catch(function(e){
+    list.innerHTML='<div class="empty">Could not load the corpus data ('+esc(e.message)+').</div>';
+    countEl.textContent='';
+  });
+})();
+</script>
+</body>
+</html>
