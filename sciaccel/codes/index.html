@@ -120,25 +120,28 @@ mark{background:color-mix(in srgb,var(--mint) 30%,transparent);color:inherit;bor
 <div class="pagetabs" role="navigation" aria-label="Site sections">
  <a href="../"><span>Overview</span></a>
  <a href="../papers/"><span>Papers</span><span style="opacity:.6;letter-spacing:0">13,417</span></a>
- <a href="../codes/" aria-current="page"><span>Codes</span><span style="opacity:.6;letter-spacing:0">2,220</span></a>
+ <a href="../codes/" aria-current="page"><span>Codes</span><span style="opacity:.6;letter-spacing:0">1,176</span></a>
  <span class="grow"></span>
 </div>
 
 
 <div class="wrap">
   <h1>Code registry</h1>
-  <p class="sub">Every distinct scientific code the corpus found being <em>used</em> by two or more papers, after merging naming variants (LAMMPS / LAMMPS module / lammp are one entry). Ranked by how many papers run it.</p>
+  <p class="sub">Scientific codes the corpus found being <em>used</em> by two or more papers, after merging naming variants (LAMMPS / LAMMPS module / lammp are one entry), filtered to those whose link resolves. Ranked by how many papers run it.</p>
 
-  <div class="gapbox">
-    <div class="gh">Found, but mostly not connected yet</div>
-    <p>These codes were identified by reading paper full text, so a name is only as linked as the paper made it. <b>516 of 2,220</b> resolve to a code host <b>and return a live page</b> — every link on this page was HTTP-checked on 15 Aug 2026, and <b>158 were found dead</b> and are marked as such. The rest name a code that certainly exists, but the paper printed no repository, only a homepage, a citation, or nothing at all. Resolving those is a separate pass that has not run: it needs a registry lookup (Software Heritage, ASCL, OpenAlex) per name, not more reading.</p>
+  <div class="gapbox" style="border-color:color-mix(in srgb,var(--mint) 38%,transparent);
+   background:color-mix(in srgb,var(--mint) 7%,transparent)">
+    <div class="gh" style="color:var(--mint)">Every link here was checked</div>
+    <p>1,176 scientific codes, each used by two or more papers and each with a link that was fetched and returned a live page on 15 Aug 2026. <b>516</b> point at a repository on a code host; the rest link to a project homepage or documentation. Codes whose links were dead, or that the papers named without any link, are not listed &#8212; resolving those needs a registry lookup pass (Software Heritage, ASCL, OpenAlex) that has not run.</p>
     <div class="bars">
-      <div><b class="ok">516</b><span>verified live repositories</span></div>
-      <div><b>1,096</b><span>links that resolve</span></div>
-      <div><b class="no">158</b><span>dead links found</span></div>
-      <div><b>2,220</b><span>codes used by 2+ papers</span></div>
+      <div><b class="ok">516</b><span>verified repositories</span></div>
+      <div><b>660</b><span>verified project pages</span></div>
+      <div><b>1,176</b><span>codes listed</span></div>
+      <div><b>100%</b><span>links checked live</span></div>
     </div>
   </div>
+
+  
 
   <div class="searchrow">
     <input id="q" type="search" placeholder="Search a code name — LAMMPS, PETSc, GROMACS…" autocomplete="off">
@@ -157,11 +160,9 @@ mark{background:color-mix(in srgb,var(--mint) 30%,transparent);color:inherit;bor
     </select>
   </div>
   <div class="chips">
-    <button class="chip" id="f-res"   aria-pressed="false">Resolved to a repo</button>
-    <button class="chip" id="f-unres" aria-pressed="false">Not connected yet</button>
-    <button class="chip" id="f-os"    aria-pressed="false">Open source</button>
-    <button class="chip" id="f-dead"  aria-pressed="false">Dead link</button>
-  </div>
+    <button class="chip" id="f-res"   aria-pressed="false">On a code host</button>
+        <button class="chip" id="f-os"    aria-pressed="false">Open source</button>
+      </div>
 
   <p class="meta" id="count">Loading…</p>
   <table>
@@ -191,7 +192,7 @@ mark{background:color-mix(in srgb,var(--mint) 30%,transparent);color:inherit;bor
   var $=function(i){return document.getElementById(i);};
   var q=$('q'), sortSel=$('sort'), kindSel=$('kind'), rows=$('rows'),
       countEl=$('count'), pager=$('pager');
-  var fRes=$('f-res'), fUn=$('f-unres'), fOs=$('f-os'), fDead=$('f-dead');
+  var fRes=$('f-res'), fOs=$('f-os');
   function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;')
     .replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
   function hl(s,t){ if(!t) return esc(s);
@@ -201,13 +202,10 @@ mark{background:color-mix(in srgb,var(--mint) 30%,transparent);color:inherit;bor
   function apply(){
     var t=q.value.trim().toLowerCase(), k=kindSel.value;
     var wantRes=fRes.getAttribute('aria-pressed')==='true';
-    var wantUn=fUn.getAttribute('aria-pressed')==='true';
     var wantOs=fOs.getAttribute('aria-pressed')==='true';
     view=all.filter(function(c){
       if(wantRes && !c.code) return false;
-      if(wantUn && c.code) return false;
       if(wantOs && c.os!=='yes') return false;
-      if(fDead.getAttribute('aria-pressed')==='true' && c.ok!==false) return false;
       if(k && c.k!==k) return false;
       if(t && c.n.toLowerCase().indexOf(t)<0 && (!c.h||c.h.indexOf(t)<0)) return false;
       return true;
@@ -236,9 +234,7 @@ mark{background:color-mix(in srgb,var(--mint) 30%,transparent);color:inherit;bor
                               : '<span class="badge">unknown</span>';
       var repo;
       if(c.code) repo='<span class="badge res">verified</span> <span class="host">'+esc(c.r||c.h||'')+'</span>';
-      else if(c.ok===false) repo='<span class="badge dead">dead link '+(c.st||'')+'</span> <span class="host">'+esc(c.h||'')+'</span>';
-      else if(c.ok==='blocked') repo='<span class="badge unres">unverified</span> <span class="host">'+esc(c.h||'')+'</span>';
-      else repo='<span class="badge unres">not connected</span>'+(c.h?' <span class="host">'+esc(c.h)+'</span>':'');
+      else repo='<span class="badge unres">project page</span> <span class="host">'+esc(c.h||'')+'</span>';
       return '<tr><td class="nm">'+name+(c.v>1?' <span class="host">'+c.v+' name variants</span>':'')+'</td>'
         +'<td class="num">'+c.p.toLocaleString()+'</td>'
         +'<td class="hide-sm">'+kind+'</td><td class="hide-sm">'+lic+'</td><td>'+repo+'</td></tr>';
@@ -254,10 +250,8 @@ mark{background:color-mix(in srgb,var(--mint) 30%,transparent);color:inherit;bor
 
   var d; q.addEventListener('input',function(){clearTimeout(d);d=setTimeout(apply,130);});
   sortSel.onchange=apply; kindSel.onchange=apply;
-  [fRes,fUn,fOs,fDead].forEach(function(b){b.onclick=function(){
+  [fRes,fOs].forEach(function(b){b.onclick=function(){
     b.setAttribute('aria-pressed',b.getAttribute('aria-pressed')==='true'?'false':'true');
-    if(b===fRes && fRes.getAttribute('aria-pressed')==='true') fUn.setAttribute('aria-pressed','false');
-    if(b===fUn && fUn.getAttribute('aria-pressed')==='true') fRes.setAttribute('aria-pressed','false');
     apply();};});
 
   fetch('../data/codes.json').then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.json();})
