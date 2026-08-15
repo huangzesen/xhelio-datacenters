@@ -80,6 +80,7 @@ tbody tr:hover{background:color-mix(in srgb,var(--mint) 5%,transparent)}
   border-radius:4px;border:1px solid var(--line-2);color:var(--muted);text-transform:uppercase}
 .badge.res{color:var(--mint);border-color:color-mix(in srgb,var(--mint) 50%,transparent)}
 .badge.unres{color:var(--orange);border-color:color-mix(in srgb,var(--orange) 45%,transparent)}
+.badge.dead{color:var(--red);border-color:color-mix(in srgb,var(--red) 50%,transparent)}
 .badge.k{color:var(--violet);border-color:color-mix(in srgb,var(--violet) 42%,transparent)}
 .num{font-variant-numeric:tabular-nums;font-weight:700}
 .host{color:var(--muted);font-size:11.5px}
@@ -130,11 +131,11 @@ mark{background:color-mix(in srgb,var(--mint) 30%,transparent);color:inherit;bor
 
   <div class="gapbox">
     <div class="gh">Found, but mostly not connected yet</div>
-    <p>These codes were identified by reading paper full text, so a name is only as linked as the paper made it. <b>550 of 2,220</b> resolve to a real code host — GitHub, GitLab, Bitbucket, SourceForge. The rest name a code that certainly exists, but the paper printed no repository, only a homepage, a citation, or nothing at all. Resolving those is a separate pass that has not run: it needs a registry lookup (Software Heritage, ASCL, OpenAlex) per name, not more reading.</p>
+    <p>These codes were identified by reading paper full text, so a name is only as linked as the paper made it. <b>516 of 2,220</b> resolve to a code host <b>and return a live page</b> — every link on this page was HTTP-checked on 15 Aug 2026, and <b>158 were found dead</b> and are marked as such. The rest name a code that certainly exists, but the paper printed no repository, only a homepage, a citation, or nothing at all. Resolving those is a separate pass that has not run: it needs a registry lookup (Software Heritage, ASCL, OpenAlex) per name, not more reading.</p>
     <div class="bars">
-      <div><b class="ok">550</b><span>resolved to a code host</span></div>
-      <div><b>1,334</b><span>have some link</span></div>
-      <div><b class="no">886</b><span>no link at all</span></div>
+      <div><b class="ok">516</b><span>verified live repositories</span></div>
+      <div><b>1,096</b><span>links that resolve</span></div>
+      <div><b class="no">158</b><span>dead links found</span></div>
       <div><b>2,220</b><span>codes used by 2+ papers</span></div>
     </div>
   </div>
@@ -159,6 +160,7 @@ mark{background:color-mix(in srgb,var(--mint) 30%,transparent);color:inherit;bor
     <button class="chip" id="f-res"   aria-pressed="false">Resolved to a repo</button>
     <button class="chip" id="f-unres" aria-pressed="false">Not connected yet</button>
     <button class="chip" id="f-os"    aria-pressed="false">Open source</button>
+    <button class="chip" id="f-dead"  aria-pressed="false">Dead link</button>
   </div>
 
   <p class="meta" id="count">Loading…</p>
@@ -189,7 +191,7 @@ mark{background:color-mix(in srgb,var(--mint) 30%,transparent);color:inherit;bor
   var $=function(i){return document.getElementById(i);};
   var q=$('q'), sortSel=$('sort'), kindSel=$('kind'), rows=$('rows'),
       countEl=$('count'), pager=$('pager');
-  var fRes=$('f-res'), fUn=$('f-unres'), fOs=$('f-os');
+  var fRes=$('f-res'), fUn=$('f-unres'), fOs=$('f-os'), fDead=$('f-dead');
   function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;')
     .replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
   function hl(s,t){ if(!t) return esc(s);
@@ -205,6 +207,7 @@ mark{background:color-mix(in srgb,var(--mint) 30%,transparent);color:inherit;bor
       if(wantRes && !c.code) return false;
       if(wantUn && c.code) return false;
       if(wantOs && c.os!=='yes') return false;
+      if(fDead.getAttribute('aria-pressed')==='true' && c.ok!==false) return false;
       if(k && c.k!==k) return false;
       if(t && c.n.toLowerCase().indexOf(t)<0 && (!c.h||c.h.indexOf(t)<0)) return false;
       return true;
@@ -231,9 +234,11 @@ mark{background:color-mix(in srgb,var(--mint) 30%,transparent);color:inherit;bor
       var lic  = c.os==='yes' ? '<span class="badge res">open source</span>'
                : c.os==='no'  ? '<span class="badge">proprietary</span>'
                               : '<span class="badge">unknown</span>';
-      var repo = c.code
-        ? '<span class="badge res">resolved</span> <span class="host">'+esc(c.r||c.h||'')+'</span>'
-        : '<span class="badge unres">not connected</span>'+(c.h?' <span class="host">'+esc(c.h)+'</span>':'');
+      var repo;
+      if(c.code) repo='<span class="badge res">verified</span> <span class="host">'+esc(c.r||c.h||'')+'</span>';
+      else if(c.ok===false) repo='<span class="badge dead">dead link '+(c.st||'')+'</span> <span class="host">'+esc(c.h||'')+'</span>';
+      else if(c.ok==='blocked') repo='<span class="badge unres">unverified</span> <span class="host">'+esc(c.h||'')+'</span>';
+      else repo='<span class="badge unres">not connected</span>'+(c.h?' <span class="host">'+esc(c.h)+'</span>':'');
       return '<tr><td class="nm">'+name+(c.v>1?' <span class="host">'+c.v+' name variants</span>':'')+'</td>'
         +'<td class="num">'+c.p.toLocaleString()+'</td>'
         +'<td class="hide-sm">'+kind+'</td><td class="hide-sm">'+lic+'</td><td>'+repo+'</td></tr>';
@@ -249,7 +254,7 @@ mark{background:color-mix(in srgb,var(--mint) 30%,transparent);color:inherit;bor
 
   var d; q.addEventListener('input',function(){clearTimeout(d);d=setTimeout(apply,130);});
   sortSel.onchange=apply; kindSel.onchange=apply;
-  [fRes,fUn,fOs].forEach(function(b){b.onclick=function(){
+  [fRes,fUn,fOs,fDead].forEach(function(b){b.onclick=function(){
     b.setAttribute('aria-pressed',b.getAttribute('aria-pressed')==='true'?'false':'true');
     if(b===fRes && fRes.getAttribute('aria-pressed')==='true') fUn.setAttribute('aria-pressed','false');
     if(b===fUn && fUn.getAttribute('aria-pressed')==='true') fRes.setAttribute('aria-pressed','false');
