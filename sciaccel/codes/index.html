@@ -120,28 +120,26 @@ mark{background:color-mix(in srgb,var(--mint) 30%,transparent);color:inherit;bor
 <div class="pagetabs" role="navigation" aria-label="Site sections">
  <a href="../"><span>Overview</span></a>
  <a href="../papers/"><span>Papers</span><span style="opacity:.6;letter-spacing:0">13,417</span></a>
- <a href="../codes/" aria-current="page"><span>Codes</span><span style="opacity:.6;letter-spacing:0">1,176</span></a>
+ <a href="../codes/" aria-current="page"><span>Codes</span><span style="opacity:.6;letter-spacing:0">513</span></a>
  <span class="grow"></span>
 </div>
 
 
 <div class="wrap">
   <h1>Code registry</h1>
-  <p class="sub">Scientific codes the corpus found being <em>used</em> by two or more papers, after merging naming variants (LAMMPS / LAMMPS module / lammp are one entry), filtered to those whose link resolves. Ranked by how many papers run it.</p>
+  <p class="sub">Scientific codes the corpus found being <em>used</em> by two or more papers, after merging naming variants (LAMMPS / LAMMPS module / lammp are one entry), filtered to those with a live repository on a code host. Ranked by how many papers run it.</p>
 
   <div class="gapbox" style="border-color:color-mix(in srgb,var(--mint) 38%,transparent);
    background:color-mix(in srgb,var(--mint) 7%,transparent)">
-    <div class="gh" style="color:var(--mint)">Every link here was checked</div>
-    <p>1,176 scientific codes, each used by two or more papers and each with a link that was fetched and returned a live page on 15 Aug 2026. <b>516</b> point at a repository on a code host; the rest link to a project homepage or documentation. Codes whose links were dead, or that the papers named without any link, are not listed &#8212; resolving those needs a registry lookup pass (Software Heritage, ASCL, OpenAlex) that has not run.</p>
+    <div class="gh" style="color:var(--mint)">Every entry is a real repository</div>
+    <p>513 scientific codes, each used by two or more papers, each hosted on GitHub, Zenodo, GitLab, Bitbucket or SourceForge, and each link fetched and confirmed live on 15 Aug 2026. Project homepages and documentation sites are excluded &#8212; a benchmark task needs source you can clone, not a landing page. Codes the papers named without a repository link are not listed; recovering those needs a registry lookup pass (Software Heritage, ASCL, OpenAlex) that has not run.</p>
     <div class="bars">
-      <div><b class="ok">516</b><span>verified repositories</span></div>
-      <div><b>660</b><span>verified project pages</span></div>
-      <div><b>1,176</b><span>codes listed</span></div>
+      <div><b class="ok">451</b><span>on GitHub</span></div>
+      <div><b>62</b><span>Zenodo / GitLab / Bitbucket</span></div>
+      <div><b>394</b><span>marked open source</span></div>
       <div><b>100%</b><span>links checked live</span></div>
     </div>
   </div>
-
-  
 
   <div class="searchrow">
     <input id="q" type="search" placeholder="Search a code name — LAMMPS, PETSc, GROMACS…" autocomplete="off">
@@ -160,7 +158,6 @@ mark{background:color-mix(in srgb,var(--mint) 30%,transparent);color:inherit;bor
     </select>
   </div>
   <div class="chips">
-    <button class="chip" id="f-res"   aria-pressed="false">On a code host</button>
         <button class="chip" id="f-os"    aria-pressed="false">Open source</button>
       </div>
 
@@ -192,7 +189,7 @@ mark{background:color-mix(in srgb,var(--mint) 30%,transparent);color:inherit;bor
   var $=function(i){return document.getElementById(i);};
   var q=$('q'), sortSel=$('sort'), kindSel=$('kind'), rows=$('rows'),
       countEl=$('count'), pager=$('pager');
-  var fRes=$('f-res'), fOs=$('f-os');
+  var fOs=$('f-os');
   function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;')
     .replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
   function hl(s,t){ if(!t) return esc(s);
@@ -201,10 +198,8 @@ mark{background:color-mix(in srgb,var(--mint) 30%,transparent);color:inherit;bor
 
   function apply(){
     var t=q.value.trim().toLowerCase(), k=kindSel.value;
-    var wantRes=fRes.getAttribute('aria-pressed')==='true';
     var wantOs=fOs.getAttribute('aria-pressed')==='true';
     view=all.filter(function(c){
-      if(wantRes && !c.code) return false;
       if(wantOs && c.os!=='yes') return false;
       if(k && c.k!==k) return false;
       if(t && c.n.toLowerCase().indexOf(t)<0 && (!c.h||c.h.indexOf(t)<0)) return false;
@@ -250,7 +245,7 @@ mark{background:color-mix(in srgb,var(--mint) 30%,transparent);color:inherit;bor
 
   var d; q.addEventListener('input',function(){clearTimeout(d);d=setTimeout(apply,130);});
   sortSel.onchange=apply; kindSel.onchange=apply;
-  [fRes,fOs].forEach(function(b){b.onclick=function(){
+  [fOs].forEach(function(b){b.onclick=function(){
     b.setAttribute('aria-pressed',b.getAttribute('aria-pressed')==='true'?'false':'true');
     apply();};});
 
