@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="dark" />
+  <title>ScienceAccelBench｜从论文到可基准测试代码库</title>
+  <script src="./assets/echarts.min.js"></script>
+  <style>
+    :root {
+      --bg: #07101d;
+      --panel: rgba(15, 28, 47, 0.72);
+      --line: rgba(148, 174, 211, 0.15);
+      --text: #f4f8ff;
+      --muted: #9aabc3;
+      --cyan: #55d7ff;
+      --blue: #678cff;
+      --violet: #9a7cff;
+      --amber: #f3b860;
+      --green: #56dfb3;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+      background: var(--bg);
+    }
+
+    body {
+      color: var(--text);
+      font-family: Inter, "SF Pro Display", "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: geometricPrecision;
+    }
+
+    .page {
+      position: relative;
+      isolation: isolate;
+      width: 100vw;
+      height: 100vh;
+      min-width: 1080px;
+      min-height: 680px;
+      padding: 42px 62px 28px;
+      display: grid;
+      grid-template-rows: 166px 136px minmax(290px, 1fr) 54px;
+      background:
+        radial-gradient(900px 480px at 8% 4%, rgba(67, 153, 255, 0.13), transparent 65%),
+        radial-gradient(760px 460px at 92% 92%, rgba(99, 218, 179, 0.09), transparent 66%),
+        linear-gradient(145deg, #07101d 0%, #091524 46%, #07101b 100%);
+    }
+
+    .page::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      opacity: 0.18;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(143, 174, 218, 0.055) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(143, 174, 218, 0.045) 1px, transparent 1px);
+      background-size: 64px 64px;
+      mask-image: linear-gradient(to bottom, black, transparent 86%);
+    }
+
+    header {
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(620px, 1fr) minmax(420px, 0.72fr);
+      column-gap: 50px;
+      align-items: start;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 15px;
+      color: #80ddff;
+      font-size: 13px;
+      font-weight: 760;
+      letter-spacing: 0.155em;
+      text-transform: uppercase;
+    }
+
+    .brand .mark {
+      width: 25px;
+      height: 7px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--cyan), var(--violet));
+      box-shadow: 0 0 20px rgba(85, 215, 255, 0.28);
+    }
+
+    .brand .context {
+      color: #778ba8;
+      font-weight: 650;
+      letter-spacing: 0.12em;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(34px, 2.65vw, 48px);
+      font-weight: 740;
+      line-height: 1.08;
+      letter-spacing: -0.035em;
+    }
+
+    .dek {
+      margin: 12px 0 0;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.55;
+      letter-spacing: 0.01em;
+    }
+
+    .definition {
+      align-self: center;
+      margin-top: 15px;
+      padding: 17px 20px 16px;
+      border: 1px solid rgba(86, 223, 179, 0.23);
+      border-left: 3px solid var(--green);
+      border-radius: 10px;
+      background: linear-gradient(110deg, rgba(86, 223, 179, 0.095), rgba(12, 24, 41, 0.58));
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.025);
+    }
+
+    .definition .eyebrow {
+      display: block;
+      margin-bottom: 7px;
+      color: #79e8c4;
+      font-size: 11px;
+      font-weight: 780;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .definition p {
+      margin: 0;
+      color: #c9d7e8;
+      font-size: 14px;
+      line-height: 1.58;
+    }
+
+    .definition code {
+      color: #effff9;
+      font-family: "SFMono-Regular", Consolas, monospace;
+      font-size: 12px;
+      font-weight: 650;
+      white-space: nowrap;
+    }
+
+    .stage-strip {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 15px;
+      padding: 18px 14px 10px;
+    }
+
+    .stage {
+      position: relative;
+      min-width: 0;
+      padding: 13px 15px 12px 17px;
+      border: 1px solid rgba(148, 174, 211, 0.14);
+      border-radius: 10px;
+      background: linear-gradient(145deg, rgba(20, 37, 61, 0.77), rgba(11, 23, 39, 0.52));
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.026), 0 12px 30px rgba(0,0,0,0.09);
+    }
+
+    .stage::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 17px;
+      bottom: 17px;
+      width: 2px;
+      border-radius: 3px;
+      background: var(--accent);
+      box-shadow: 0 0 13px color-mix(in srgb, var(--accent) 45%, transparent);
+    }
+
+    .stage-top {
+      display: flex;
+      align-items: baseline;
+      gap: 9px;
+      min-width: 0;
+    }
+
+    .stage-no {
+      flex: 0 0 auto;
+      color: var(--accent);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.11em;
+    }
+
+    .stage-name {
+      min-width: 0;
+      color: #d3deec;
+      font-size: 14px;
+      font-weight: 650;
+      line-height: 1.3;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .stage:last-child .stage-name {
+      white-space: normal;
+      font-size: 12px;
+      line-height: 1.25;
+    }
+
+    .stage-value {
+      margin-top: 7px;
+      color: #f7faff;
+      font-variant-numeric: tabular-nums;
+      font-size: clamp(25px, 1.75vw, 31px);
+      font-weight: 720;
+      line-height: 1;
+      letter-spacing: -0.035em;
+    }
+
+    .stage-meta {
+      margin-top: 7px;
+      color: #8295b0;
+      font-size: 11px;
+      font-weight: 560;
+      line-height: 1.2;
+      letter-spacing: 0.015em;
+    }
+
+    .chart-wrap {
+      position: relative;
+      min-height: 0;
+      overflow: visible;
+    }
+
+    .chart-kicker {
+      position: absolute;
+      z-index: 2;
+      left: 18px;
+      top: 9px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #7185a1;
+      font-size: 11px;
+      font-weight: 650;
+      letter-spacing: 0.105em;
+      text-transform: uppercase;
+      pointer-events: none;
+    }
+
+    .chart-kicker::before {
+      content: "";
+      width: 18px;
+      height: 1px;
+      background: #526984;
+    }
+
+    #chart {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    footer {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 30px;
+      border-top: 1px solid var(--line);
+      color: #6f829d;
+      font-size: 11px;
+      letter-spacing: 0.025em;
+    }
+
+    .legend-note {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding-top: 14px;
+    }
+
+    .legend-note .swatch {
+      width: 27px;
+      height: 7px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--cyan), var(--green));
+      opacity: 0.82;
+    }
+
+    .source {
+      padding-top: 14px;
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+    }
+
+    @media (max-width: 1250px) {
+      .page { padding-left: 34px; padding-right: 34px; }
+      header { grid-template-columns: 1fr 0.7fr; column-gap: 28px; }
+      .stage-strip { gap: 9px; padding-left: 4px; padding-right: 4px; }
+      .stage { padding-left: 12px; padding-right: 9px; }
+    }
+  </style>
+</head>
+<body>
+<a id="__backlink" href="./" style="position:fixed;top:16px;left:16px;z-index:999;font:600 13px/1 system-ui,-apple-system,sans-serif;color:#78f7d4;text-decoration:none;padding:9px 14px;border:1px solid rgba(120,247,212,.4);border-radius:999px;background:rgba(5,7,13,.72);backdrop-filter:blur(6px)">← ScienceAccelBench</a>
+  <main class="page">
+    <header>
+      <div>
+        <div class="brand"><span class="mark"></span><span>ScienceAccelBench</span><span class="context">Dataset funnel</span></div>
+        <h1>从论文到可基准测试代码库</h1>
+        <p class="dek">五阶段筛选漏斗揭示：大规模论文语料如何收敛为高计算强度、具并行价值的 benchmark 候选。</p>
+      </div>
+      <aside class="definition" aria-label="第五阶段定义">
+        <span class="eyebrow">Stage 05 · Definition</span>
+        <p>第 5 阶段定义：仅 <code>compute_bound = high</code>——即有价值<strong>被 benchmark</strong> 的代码库。只要是高性能计算，有没有 GPU 版本都可以；<code>hw_status</code> 与 <code>acceleration_potential</code> 均不参与筛选，重点是<strong>并行价值</strong>。</p>
+      </aside>
+    </header>
+
+    <section class="stage-strip" aria-label="ScienceAccelBench 五阶段精确数量">
+      <article class="stage" style="--accent:#55d7ff">
+        <div class="stage-top"><span class="stage-no">01</span><span class="stage-name">arXiv 论文</span></div>
+        <div class="stage-value">487,329</div>
+        <div class="stage-meta">基准总体 · 100.00%</div>
+      </article>
+      <article class="stage" style="--accent:#678cff">
+        <div class="stage-top"><span class="stage-no">02</span><span class="stage-name">有 sim</span></div>
+        <div class="stage-value">86,476</div>
+        <div class="stage-meta">总体 17.74% · 上一步 17.74%</div>
+      </article>
+      <article class="stage" style="--accent:#9a7cff">
+        <div class="stage-top"><span class="stage-no">03</span><span class="stage-name">parallel sim</span></div>
+        <div class="stage-value">13,452</div>
+        <div class="stage-meta">总体 2.76% · 上一步 15.56%</div>
+      </article>
+      <article class="stage" style="--accent:#f3b860">
+        <div class="stage-top"><span class="stage-no">04</span><span class="stage-name">代码库</span></div>
+        <div class="stage-value">6,980</div>
+        <div class="stage-meta">总体 1.43% · 上一步 51.89%</div>
+      </article>
+      <article class="stage" style="--accent:#56dfb3">
+        <div class="stage-top"><span class="stage-no">05</span><span class="stage-name">有价值被 benchmark 的代码库</span></div>
+        <div class="stage-value">4,082</div>
+        <div class="stage-meta">总体 0.84% · 上一步 58.48%</div>
+      </article>
+    </section>
+
+    <section class="chart-wrap" aria-label="五阶段 Sankey 图">
+      <div class="chart-kicker">Retained flow · 保留子集</div>
+      <div id="chart" role="img" aria-label="arXiv 论文 487329，有 sim 86476，parallel sim 13452，代码库 6980，有价值被 benchmark 的代码库 4082"></div>
+    </section>
+
+    <footer>
+      <div class="legend-note"><span class="swatch"></span><span>节点与流宽按实际数量线性缩放；连线表示进入下一阶段的保留子集</span></div>
+      <div class="source">ScienceAccelBench · Jason 提供的精确漏斗 · n = 487,329</div>
+    </footer>
+  </main>
+
+  <script>
+    (function () {
+      'use strict';
+
+      var formatter = new Intl.NumberFormat('en-US');
+      var stages = [
+        { name: 'arXiv 论文', value: 487329, depth: 0, color: '#55d7ff', overall: '100.00%', step: '—' },
+        { name: '有 sim', value: 86476, depth: 1, color: '#678cff', overall: '17.74%', step: '17.74%' },
+        { name: 'parallel sim', value: 13452, depth: 2, color: '#9a7cff', overall: '2.76%', step: '15.56%' },
+        { name: '代码库', value: 6980, depth: 3, color: '#f3b860', overall: '1.43%', step: '51.89%' },
+        { name: '有价值被 benchmark 的代码库', value: 4082, depth: 4, color: '#56dfb3', overall: '0.84%', step: '58.48%' }
+      ];
+
+      var links = stages.slice(0, -1).map(function (stage, index) {
+        var next = stages[index + 1];
+        return {
+          source: stage.name,
+          target: next.name,
+          value: next.value,
+          stepRate: next.step,
+          lineStyle: {
+            color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
+              { offset: 0, color: stage.color },
+              { offset: 1, color: next.color }
+            ]),
+            opacity: 0.64,
+            curveness: 0.56
+          }
+        };
+      });
+
+      var chartElement = document.getElementById('chart');
+      var chart = echarts.init(chartElement, null, { renderer: 'canvas', devicePixelRatio: Math.max(2, window.devicePixelRatio || 1) });
+
+      var option = {
+        animation: true,
+        animationDuration: 1300,
+        animationDurationUpdate: 700,
+        animationEasing: 'cubicOut',
+        backgroundColor: 'transparent',
+        tooltip: {
+          trigger: 'item',
+          confine: true,
+          appendToBody: false,
+          backgroundColor: 'rgba(7, 15, 27, 0.96)',
+          borderColor: 'rgba(144, 174, 213, 0.32)',
+          borderWidth: 1,
+          padding: [13, 15],
+          textStyle: {
+            color: '#dce7f5',
+            fontFamily: 'Inter, PingFang SC, Microsoft YaHei, sans-serif',
+            fontSize: 13
+          },
+          extraCssText: 'border-radius:9px;box-shadow:0 16px 40px rgba(0,0,0,.28);',
+          formatter: function (params) {
+            if (params.dataType === 'edge') {
+              return '<div style="min-width:210px">' +
+                '<div style="color:#8ea2bd;font-size:11px;letter-spacing:.08em;margin-bottom:7px">阶段保留流</div>' +
+                '<div style="font-weight:700;color:#f3f7fd;margin-bottom:9px">' + params.data.source + ' &nbsp;→&nbsp; ' + params.data.target + '</div>' +
+                '<div><span style="color:#8ea2bd">进入下一阶段</span><span style="float:right;font-weight:700;color:#fff">' + formatter.format(params.value) + '</span></div>' +
+                '<div style="margin-top:5px"><span style="color:#8ea2bd">上一步转化率</span><span style="float:right;color:#8de6c8">' + params.data.stepRate + '</span></div>' +
+                '</div>';
+            }
+            var data = params.data;
+            return '<div style="min-width:220px">' +
+              '<div style="color:' + data.color + ';font-size:11px;font-weight:700;letter-spacing:.1em;margin-bottom:7px">STAGE ' + String(data.depth + 1).padStart(2, '0') + '</div>' +
+              '<div style="font-weight:700;color:#f3f7fd;max-width:300px;line-height:1.45">' + data.name + '</div>' +
+              '<div style="font-size:22px;font-weight:750;color:#fff;margin:8px 0 7px">' + formatter.format(data.value) + '</div>' +
+              '<div><span style="color:#8ea2bd">占初始总体</span><span style="float:right;color:#dce7f5">' + data.overall + '</span></div>' +
+              (data.depth === 0 ? '' : '<div style="margin-top:5px"><span style="color:#8ea2bd">上一步转化率</span><span style="float:right;color:#8de6c8">' + data.step + '</span></div>') +
+              '</div>';
+          }
+        },
+        series: [{
+          type: 'sankey',
+          name: 'ScienceAccelBench Funnel',
+          left: 22,
+          right: 22,
+          top: 44,
+          bottom: 18,
+          orient: 'horizontal',
+          nodeAlign: 'justify',
+          nodeWidth: 17,
+          nodeGap: 64,
+          layoutIterations: 72,
+          draggable: false,
+          data: stages.map(function (stage) {
+            return {
+              name: stage.name,
+              value: stage.value,
+              depth: stage.depth,
+              color: stage.color,
+              overall: stage.overall,
+              step: stage.step,
+              itemStyle: {
+                color: stage.color,
+                borderColor: 'rgba(235, 246, 255, 0.72)',
+                borderWidth: 1,
+                borderRadius: 3,
+                shadowBlur: 16,
+                shadowColor: stage.color + '42'
+              }
+            };
+          }),
+          links: links,
+          label: { show: false },
+          lineStyle: {
+            color: 'gradient',
+            opacity: 0.62,
+            curveness: 0.56
+          },
+          emphasis: {
+            focus: 'adjacency',
+            itemStyle: {
+              borderColor: '#ffffff',
+              borderWidth: 1.5,
+              shadowBlur: 24
+            },
+            lineStyle: { opacity: 0.9 }
+          },
+          blur: {
+            itemStyle: { opacity: 0.36 },
+            lineStyle: { opacity: 0.16 }
+          }
+        }],
+        graphic: [
+          {
+            type: 'text',
+            right: 18,
+            top: 7,
+            silent: true,
+            style: {
+              text: '487,329  →  4,082   ·   END-TO-END  0.84%',
+              fill: '#637995',
+              font: '600 11px Inter, PingFang SC, sans-serif',
+              textAlign: 'right'
+            }
+          }
+        ]
+      };
+
+      chart.setOption(option);
+
+      var resizeTimer;
+      window.addEventListener('resize', function () {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function () { chart.resize(); }, 80);
+      });
+
+      window.__SCIENCEACCELBENCH_SANKEY_READY__ = true;
+    }());
+  </script>
+</body>
+</html>
